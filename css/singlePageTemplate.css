@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+3&display=swap');
 /* Body */
 body {
     font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -13,41 +14,81 @@ body {
 }
 /* Container */
 .container {
-	width: 90%;
+/*	width: 90%;*/
 	margin-left: auto;
-/*	margin-right: auto;*/
-	height: 1000px;
+	margin-right: 5%;
+/*	height: 1000px;*/
 	background-color: #FFFFFF;
 	padding: 40px;
 	display: flex;
 	margin-top: 20px;
 }
-/* Navigation */
-header {
-	width: 100%;
-	height: 5%;
-	background-color: #52bad5;
-	border-bottom: 1px solid #2C9AB7;
-}
-
-.about {
-	padding-left: 25px;
-	padding-right: 25px;
-	padding-top: 35px;
-	display: inline-block;
-	background-color: #FFFFFF;
-	margin-top: 0px;
-}
 
 .sidenav{
 	padding-top: 10px;
-	padding-right: 10px;
-	padding-left: 50px;
+	padding-right: 20px;
+	padding-left: 10px;
 	padding-bottom: 10px;
 	display: block;
-	margin-right: 30px;
+	margin-right: 20px;
 /*	margin-left: 75px;*/
 	text-align: center;
+	width: 450px;
+}
+
+.sidenav a{
+	color: darkgray;
+	text-decoration: none; 
+	font-size: 14pt;
+}
+.sidenav a:hover {
+  color: black;
+	font-weight: bold;
+	text-decoration: none; 
+}
+.sidenav a:active { 
+  text-decoration: none; 
+	color: black;
+	font-weight: bold;
+}
+
+.collapsible {
+  color: dimgray;
+	background-color: white;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+	border-width: 0px;
+}
+
+.active, .collapsible:hover {
+/*  background-color: #555;*/
+	font-weight: bold;
+	color: black;
+}
+
+.collapsible:after {
+  content: '\002B';
+	padding-left: 10px;
+	color: darkgray;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+	font-weight: bold;
+	color: black;
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
 }
 
 
