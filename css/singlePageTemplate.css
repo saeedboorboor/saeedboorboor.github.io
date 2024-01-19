@@ -91,6 +91,52 @@ body {
   background-color: #f1f1f1;
 }
 
+.tags-input-journal
+{ 
+	margin-right: 8px; 
+	padding: 5px; 
+	background-color: #ddd; 
+	border-radius: 4px; 
+	font-size: 11pt;
+} 
+
+.tags-input-conference
+{ 
+	margin-right: 8px; 
+	padding: 5px; 
+	background-color: #ffe873; 
+	border-radius: 4px; 
+	font-size: 11pt;
+} 
+
+.tags-input-immersive
+{ 
+	margin-right: 8px; 
+	padding: 5px; 
+	background-color:darkseagreen; 
+	border-radius: 4px; 
+	font-size: 11pt;
+} 
+
+.tags-input-scivis
+{ 
+	margin-right: 8px; 
+	padding: 5px; 
+	background-color:#7ac3ff; 
+	border-radius: 4px; 
+	font-size: 11pt;
+} 
+
+
+.tags-input-biomedical
+{ 
+	margin-right: 8px; 
+	padding: 5px; 
+	background-color:#ffc57a; 
+	border-radius: 4px; 
+	font-size: 11pt;
+} 
+
 
 /* Mobile */
 @media (max-width: 320px) {
