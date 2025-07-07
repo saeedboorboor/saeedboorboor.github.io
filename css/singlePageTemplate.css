@@ -87,51 +87,93 @@ body {
   background-color: #f1f1f1;
 }
 
-.tags-input-journal
-{ 
-	margin-right: 8px; 
-	padding: 5px; 
-	background-color: #ddd; 
-	border-radius: 4px; 
-	font-size: 11pt;
-} 
+/* Original styles for tags within publication entries (these are the "active" colors) */
+.tags-input-journal { background-color: #ddd; color: black; }
+.tags-input-conference { background-color: #ffe873; color: black; }
+.tags-input-immersive { background-color: darkseagreen; color: whitesmoke; }
+.tags-input-scivis { background-color: #7ac3ff; color: black; }
+.tags-input-biomedical { background-color: #ffc57a; color: black; }
 
-.tags-input-conference
-{ 
-	margin-right: 8px; 
-	padding: 5px; 
-	background-color: #ffe873; 
-	border-radius: 4px; 
-	font-size: 11pt;
-} 
-
-.tags-input-immersive
-{ 
-	margin-right: 8px; 
-	padding: 5px; 
-	background-color:darkseagreen; 
-	border-radius: 4px; 
-	font-size: 11pt;
-} 
-
-.tags-input-scivis
-{ 
-	margin-right: 8px; 
-	padding: 5px; 
-	background-color:#7ac3ff; 
-	border-radius: 4px; 
-	font-size: 11pt;
-} 
-
-
-.tags-input-biomedical
-{ 
-	margin-right: 8px; 
-	padding: 5px; 
-	background-color:#ffc57a; 
-	border-radius: 4px; 
-	font-size: 11pt;
+/* Common properties for ALL tags (both in-publication divs and filter buttons) */
+/* This rule applies base styling to both the original div tags and the new filter buttons */
+[class^="tags-input-"], .tag-filter-button {
+    margin-right: 8px;
+    padding: 5px 10px; /* Consistent padding for all tags/buttons */
+    border-radius: 4px;
+    font-size: 11pt;
+    font-family: "Inter", sans-serif;
+    white-space: nowrap; /* Prevents text from wrapping inside tags/buttons */
+    border: 1px solid transparent; /* Default transparent border */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
 }
+
+/* Properties specific to filter buttons (default inactive state) */
+.tag-filter-button {
+    cursor: pointer;
+    background-color: #f0f0f0; /* Lighter default for inactive buttons */
+    color: #555; /* Darker text for inactive buttons for contrast */
+    border-color: #ccc; /* Lighter border for inactive buttons */
+}
+
+.tag-filter-button:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover for inactive buttons */
+}
+
+/* Active state for filter buttons - these override the .tag-filter-button defaults
+   and match the colors of the original .tags-input-* divs */
+.tag-filter-button.active[data-tag="Journal"] {
+    background-color: #ddd;
+    color: black;
+    border-color: #bbb; /* Slightly darker border for active state */
+    font-weight: normal;
+}
+
+.tag-filter-button.active[data-tag="Conference"] {
+    background-color: #ffe873;
+    color: black;
+    border-color: #e0d060;
+    font-weight: normal;
+}
+
+.tag-filter-button.active[data-tag="AR/VR/MR"] {
+    background-color: darkseagreen;
+    color: whitesmoke;
+    border-color: #5f9e5f;
+    font-weight: normal;
+}
+
+.tag-filter-button.active[data-tag="SciVis"] {
+    background-color: #7ac3ff;
+    color: black;
+    border-color: #5a9edb;
+    font-weight: normal;
+}
+
+.tag-filter-button.active[data-tag="Biomedical"] {
+    background-color: #ffc57a;
+    color: black;
+    border-color: #e0a55a;
+    font-weight: normal;
+}
+
+.tag-filter-button::after {
+  content: none;
+}
+
+/* Hide publications and year bars by default when filtered */
+.publication-entry.hidden,
+.year-bar.hidden {
+    display: none;
+}
+
+/* Ensure publication entries are block-level for proper hiding */
+.publication-entry {
+    display: flex; /* Keep original flex layout */
+    padding-top: 25px; /* Keep original padding */
+    font-family: Helvetica;
+
+}
+
 
 ul.news-list {
     list-style: none;
