@@ -2,17 +2,19 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+3&display=swap');
 /* Body */
 body {
-    font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /*font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    font-family: Arial, sans-serif;
     background-color: #FFFFFF;
     margin-top: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
     margin-left: 0px;
     font-style: normal;
-    font-weight: 200;
+    /*font-weight: 300;*/
     font-size: 12pt;
 }
 /* Container */
+
 .container {
 /*	width: 90%;*/
 	margin-left: auto;
@@ -24,12 +26,19 @@ body {
 	margin-top: 20px;
 }
 
-.sidenav{
-	padding: 10px 20px 10px 10px;
-  display: block;
-  margin-right: 20px;
-  text-align: center;
-  min-width: 250px; /* Keep this consistent */
+
+.sidenav {
+    height: 100%;
+    width: 300px; /* Adjust width as needed */
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #f8f8f8; /* A slight background color */
+    overflow-y: auto; /* Allow sidenav to scroll if content is too tall */
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    text-align: center;
 }
 
 .sidenav a{
@@ -78,6 +87,36 @@ body {
 	font-weight: bold;
 	color: black;
 }
+
+
+/* Standardized styles for the news section */
+.sidenav-title {
+font-weight: bold;
+color: black;
+font-size: 14pt;
+}
+
+.news-list {
+font-size: 11pt;
+color: dimgray;
+margin-top: 10px;
+}
+
+.news-item {
+display: flex;
+margin-bottom: 8px;
+}
+
+.news-date {
+width: 75px;
+flex-shrink: 0;
+padding-right: 10px;
+}
+
+.main-content {
+    margin-left: 320px; /* Should be sidenav width + padding */
+    padding: 20px;
+ }
 
 .content {
   padding: 0 18px;
