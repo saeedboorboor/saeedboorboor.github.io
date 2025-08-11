@@ -2,42 +2,41 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+3&display=swap');
 /* Body */
 body {
-    /*font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-    font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
-    margin-top: 0px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    font-style: normal;
-    /*font-weight: 300;*/
-    font-size: 12pt;
+	/*font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+	font-family: Arial, sans-serif;
+	background-color: #FFFFFF;
+	margin: 0;
+    padding: 0;
+	font-style: normal;
+	/*font-weight: 300;*/
+	font-size: 12pt;
+	/* We hide the scrollbar on the body to ensure only the content panel scrolls */
+	height: 100%;
+    overflow: hidden; 
 }
 /* Container */
 
 .container {
 /*	width: 90%;*/
-	margin-left: auto;
-	margin-right: 5%;
+/*margin-left: auto;*/
+/*margin-right: 5%;*/
 /*	height: 1000px;*/
-	background-color: #FFFFFF;
-	padding: 40px;
-	display: flex;
-	margin-top: 20px;
+background-color: #FFFFFF;
+/*padding: 40px;*/
+display: flex;
+/*margin-top: 20px;*/
+height: 100vh; /* Set the container height to the full viewport height */
 }
 
 
 .sidenav {
-    height: 100%;
-    width: 300px; /* Adjust width as needed */
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #f8f8f8; /* A slight background color */
-    overflow-y: auto; /* Allow sidenav to scroll if content is too tall */
+	width: 320px; /* Give the sidebar a fixed width */
+    flex-shrink: 0; /* Prevent the sidebar from shrinking */
+    background-color: #f8f9fa;
     padding: 20px;
-    border-right: 1px solid #ddd;
+    /* This makes the sidebar itself scrollable if its content is too long */
+    overflow-y: auto; 
+    border-right: 1px solid #dee2e6;
     text-align: center;
 }
 
@@ -47,76 +46,46 @@ body {
 	font-size: 14pt;
 }
 .sidenav a:hover {
-  color: black;
+	color: black;
 	font-weight: bold;
 	text-decoration: none; 
 }
 .sidenav a:active { 
-  text-decoration: none; 
+	text-decoration: none; 
 	color: black;
 	font-weight: bold;
 }
 
 .collapsible {
-  color: dimgray;
+	color: dimgray;
 	background-color: white;
-  cursor: pointer;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
+	cursor: pointer;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
 	border-width: 0px;
 }
 
 .active, .collapsible:hover {
 /*  background-color: #555;*/
-	font-weight: bold;
-	color: black;
+font-weight: bold;
+color: black;
 }
 
 .collapsible:after {
-  content: '\002B';
+	content: '\002B';
 	padding-left: 10px;
 	color: darkgray;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
+	font-weight: bold;
+	float: right;
+	margin-left: 5px;
 }
 
 .active:after {
-  content: "\2212";
+	content: "\2212";
 	font-weight: bold;
 	color: black;
 }
-
-
-/* Standardized styles for the news section */
-.sidenav-title {
-font-weight: bold;
-color: black;
-font-size: 14pt;
-}
-
-.news-list {
-font-size: 11pt;
-color: dimgray;
-margin-top: 10px;
-}
-
-.news-item {
-display: flex;
-margin-bottom: 8px;
-}
-
-.news-date {
-width: 75px;
-flex-shrink: 0;
-padding-right: 10px;
-}
-
-.main-content {
-    margin-left: 320px; /* Should be sidenav width + padding */
-    padding: 20px;
- }
 
 .content {
   padding: 0 18px;
@@ -125,6 +94,42 @@ padding-right: 10px;
   transition: max-height 0.2s ease-out;
   background-color: #f1f1f1;
 }
+
+
+/* Standardized styles for the news section */
+.sidenav-title {
+	font-weight: bold;
+	color: black;
+	font-size: 14pt;
+}
+
+.news-list {
+	font-size: 11pt;
+	color: dimgray;
+	margin-top: 10px;
+}
+
+.news-item {
+	display: flex;
+	margin-bottom: 8px;
+}
+
+.news-date {
+	width: 75px;
+	flex-shrink: 0;
+	padding-right: 10px;
+}
+
+.main-content {
+	flex-grow: 1; /* Allows this area to take up all remaining space */
+    padding: 20px 40px;
+    /* This is the key: it makes the main content area scrollable */
+    overflow-y: auto;
+    /* This enables the smooth scrolling animation */
+    scroll-behavior: smooth;
+}
+
+
 
 /* Original styles for tags within publication entries (these are the "active" colors) */
 .tags-input-journal { background-color: #ddd; color: black; }
@@ -136,309 +141,348 @@ padding-right: 10px;
 /* Common properties for ALL tags (both in-publication divs and filter buttons) */
 /* This rule applies base styling to both the original div tags and the new filter buttons */
 [class^="tags-input-"], .tag-filter-button {
-    margin-right: 8px;
-    padding: 5px 10px; /* Consistent padding for all tags/buttons */
-    border-radius: 4px;
-    font-size: 11pt;
-    font-family: "Inter", sans-serif;
-    white-space: nowrap; /* Prevents text from wrapping inside tags/buttons */
-    border: 1px solid transparent; /* Default transparent border */
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
+	margin-right: 8px;
+	padding: 5px 10px; /* Consistent padding for all tags/buttons */
+	border-radius: 4px;
+	font-size: 11pt;
+	font-family: "Inter", sans-serif;
+	white-space: nowrap; /* Prevents text from wrapping inside tags/buttons */
+	border: 1px solid transparent; /* Default transparent border */
+	transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
 }
 
 /* Properties specific to filter buttons (default inactive state) */
 .tag-filter-button {
-    cursor: pointer;
-    background-color: #f0f0f0; /* Lighter default for inactive buttons */
-    color: #555; /* Darker text for inactive buttons for contrast */
-    border-color: #ccc; /* Lighter border for inactive buttons */
+	cursor: pointer;
+	background-color: #f0f0f0; /* Lighter default for inactive buttons */
+	color: #555; /* Darker text for inactive buttons for contrast */
+	border-color: #ccc; /* Lighter border for inactive buttons */
 }
 
 .tag-filter-button:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover for inactive buttons */
+	background-color: #e0e0e0; /* Slightly darker on hover for inactive buttons */
 }
 
 /* Active state for filter buttons - these override the .tag-filter-button defaults
    and match the colors of the original .tags-input-* divs */
-.tag-filter-button.active[data-tag="Journal"] {
-    background-color: #ddd;
-    color: black;
-    border-color: #bbb; /* Slightly darker border for active state */
-    font-weight: normal;
-}
+   .tag-filter-button.active[data-tag="Journal"] {
+   	background-color: #ddd;
+   	color: black;
+   	border-color: #bbb; /* Slightly darker border for active state */
+   	font-weight: normal;
+   }
 
-.tag-filter-button.active[data-tag="Conference"] {
-    background-color: #ffe873;
-    color: black;
-    border-color: #e0d060;
-    font-weight: normal;
-}
+   .tag-filter-button.active[data-tag="Conference"] {
+   	background-color: #ffe873;
+   	color: black;
+   	border-color: #e0d060;
+   	font-weight: normal;
+   }
 
-.tag-filter-button.active[data-tag="AR/VR/MR"] {
-    background-color: darkseagreen;
-    color: whitesmoke;
-    border-color: #5f9e5f;
-    font-weight: normal;
-}
+   .tag-filter-button.active[data-tag="AR/VR/MR"] {
+   	background-color: darkseagreen;
+   	color: whitesmoke;
+   	border-color: #5f9e5f;
+   	font-weight: normal;
+   }
 
-.tag-filter-button.active[data-tag="SciVis"] {
-    background-color: #7ac3ff;
-    color: black;
-    border-color: #5a9edb;
-    font-weight: normal;
-}
+   .tag-filter-button.active[data-tag="SciVis"] {
+   	background-color: #7ac3ff;
+   	color: black;
+   	border-color: #5a9edb;
+   	font-weight: normal;
+   }
 
-.tag-filter-button.active[data-tag="Biomedical"] {
-    background-color: #ffc57a;
-    color: black;
-    border-color: #e0a55a;
-    font-weight: normal;
-}
+   .tag-filter-button.active[data-tag="Biomedical"] {
+   	background-color: #ffc57a;
+   	color: black;
+   	border-color: #e0a55a;
+   	font-weight: normal;
+   }
 
-.tag-filter-button::after {
-  content: none;
-}
+   .tag-filter-button::after {
+   	content: none;
+   }
 
 /* Hide publications and year bars by default when filtered */
 .publication-entry.hidden,
 .year-bar.hidden {
-    display: none;
+	display: none;
 }
 
 /* Ensure publication entries are block-level for proper hiding */
 .publication-entry {
-    display: flex; /* Keep original flex layout */
-    padding-top: 25px; /* Keep original padding */
-    font-family: Helvetica;
+	display: flex; /* Keep original flex layout */
+	padding-top: 25px; /* Keep original padding */
+	font-family: Helvetica;
 
 }
 
 
 ul.news-list {
-    list-style: none;
-    padding-left: 20px;
-    color: dimgray;
+	list-style: none;
+	padding-left: 20px;
+	color: dimgray;
 }
 ul.news-list li {
-    margin-bottom: 10px;
-    font-size: 14pt;
+	margin-bottom: 10px;
+	font-size: 14pt;
 } 
+
+/* Styles for the new team section */
+.team-section {
+	padding-top: 40px;
+	padding-bottom: 50px;
+	border-top: 1px solid #dee2e6;
+	margin-top: 40px;
+}
+
+.team-grid {
+	display: grid;
+	/* This creates a responsive grid that adjusts the number of columns */
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 30px;
+	padding-top: 20px;
+}
+
+.team-member {
+	text-align: center;
+}
+
+.team-member img {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%; /* Makes the headshots circular */
+	object-fit: cover;
+	margin-bottom: 10px;
+	background-color: #efefef; /* Placeholder background */
+}
+
+.team-member p {
+	font-weight: bold;
+	margin: 0;
+}
+
+.team-member span {
+	font-size: 10pt;
+	color: dimgray;
+}
 
 
 /* Mobile */
 @media (max-width: 320px) {
-.logo {
-	width: 100%;
-	text-align: center;
-	margin-top: 13px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-}
-.container header nav {
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	width: 100%;
-	float: none;
-	display: none;
-}
-header nav ul {
-}
-nav ul li {
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	width: 100%;
-	text-align: center;
-}
-.text_column {
-	width: 100%;
-	text-align: justify;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-}
-.thumbnail {
-	width: 100%;
-}
-.footer_column {
-	width: 100%;
-	margin-top: 0px;
-}
-.parallax {
-	text-align: center;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	padding-top: 40%;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	width: 100%;
-	font-size: 18px;
-}
-.parallax_description {
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	width: 90%;
-	margin-top: 25px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 12px;
-	float: none;
-	text-align: center;
-}
-.banner {
-	background-color: #2D9AB7;
-	background-image: none;
-}
-.tagline {
-	margin-top: 20px;
-	line-height: 22px;
-}
-.hero_header {
-	padding-left: 10px;
-	padding-right: 10px;
-	line-height: 22px;
-	text-align: center;
-}
+	.logo {
+		width: 100%;
+		text-align: center;
+		margin-top: 13px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+	}
+	.container header nav {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		width: 100%;
+		float: none;
+		display: none;
+	}
+	header nav ul {
+	}
+	nav ul li {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		width: 100%;
+		text-align: center;
+	}
+	.text_column {
+		width: 100%;
+		text-align: justify;
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+	}
+	.thumbnail {
+		width: 100%;
+	}
+	.footer_column {
+		width: 100%;
+		margin-top: 0px;
+	}
+	.parallax {
+		text-align: center;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		padding-top: 40%;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		width: 100%;
+		font-size: 18px;
+	}
+	.parallax_description {
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		width: 90%;
+		margin-top: 25px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 12px;
+		float: none;
+		text-align: center;
+	}
+	.banner {
+		background-color: #2D9AB7;
+		background-image: none;
+	}
+	.tagline {
+		margin-top: 20px;
+		line-height: 22px;
+	}
+	.hero_header {
+		padding-left: 10px;
+		padding-right: 10px;
+		line-height: 22px;
+		text-align: center;
+	}
 }
 
 /* Small Tablets */
 @media (min-width: 321px)and (max-width: 767px) {
-.logo {
-	width: 100%;
-	text-align: center;
-	margin-top: 13px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	color: #043745;
-}
-.container header nav {
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	width: 100%;
-	float: none;
-	overflow: auto;
-	display: inline-block;
-	background: #52bad5;
-}
-header nav ul {
-	padding: 0px;
-	float: none;
-}
-nav ul li {
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	width: 100%;
-	text-align: center;
-	padding-top: 8px;
-	padding-bottom: 8px;
-}
-.text_column {
-	width: 100%;
-	text-align: left;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-}
-.thumbnail {
-	width: 100%;
-}
-.footer_column {
-	width: 100%;
-	margin-top: 0px;
-}
-.parallax {
-	text-align: center;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	padding-top: 40%;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	width: 100%;
-	font-size: 18px;
-}
-.parallax_description {
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	margin-top: 30%;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	float: none;
-	width: 100%;
-	text-align: center;
-}
-.thumbnail {
-	width: 50%;
-}
-.parallax {
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	padding-top: 20%;
-}
-.parallax_description {
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	width: 100%;
-	padding-top: 30px;
-}
-.banner {
-	padding-left: 20px;
-	padding-right: 20px;
-}
-.footer_column {
-	width: 100%;
-}
+	.logo {
+		width: 100%;
+		text-align: center;
+		margin-top: 13px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		color: #043745;
+	}
+	.container header nav {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		width: 100%;
+		float: none;
+		overflow: auto;
+		display: inline-block;
+		background: #52bad5;
+	}
+	header nav ul {
+		padding: 0px;
+		float: none;
+	}
+	nav ul li {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		width: 100%;
+		text-align: center;
+		padding-top: 8px;
+		padding-bottom: 8px;
+	}
+	.text_column {
+		width: 100%;
+		text-align: left;
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+	}
+	.thumbnail {
+		width: 100%;
+	}
+	.footer_column {
+		width: 100%;
+		margin-top: 0px;
+	}
+	.parallax {
+		text-align: center;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		padding-top: 40%;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		width: 100%;
+		font-size: 18px;
+	}
+	.parallax_description {
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		margin-top: 30%;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		float: none;
+		width: 100%;
+		text-align: center;
+	}
+	.thumbnail {
+		width: 50%;
+	}
+	.parallax {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		padding-top: 20%;
+	}
+	.parallax_description {
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		width: 100%;
+		padding-top: 30px;
+	}
+	.banner {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.footer_column {
+		width: 100%;
+	}
 }
 
 /* Small Desktops */
 @media (min-width: 768px) and (max-width: 1096px) {
-.text_column {
-	width: 100%;
-}
-.thumbnail {
-	width: 50%;
-}
-.text_column {
-	width: 100%;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-}
-.banner {
-	margin-top: 0px;
-	padding-top: 0px;
-}
+	.text_column {
+		width: 100%;
+	}
+	.thumbnail {
+		width: 50%;
+	}
+	.text_column {
+		width: 100%;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+	}
+	.banner {
+		margin-top: 0px;
+		padding-top: 0px;
+	}
 }

@@ -21,7 +21,7 @@
 </head>
 <body>
   <div class="container">
-    
+
     <div class="sidenav">
       <img src="images/saeedboorboor_headshot.jpg" width="200" alt=""/> 
       <div style="margin-top: 20px; display: flex; justify-content: center;">
@@ -32,21 +32,24 @@
           <a href="papers/cv.pdf" target="_blank" style="color: black;"><i class="ai ai-cv ai-2x"></i></a>
         </span>
       </div>
-      
+
       <div style="padding-top: 20px; color: grey; text-align: left">
         <span style="font-weight:bold;">Assistant Professor</span><br>
         University of Illinois Chicago
         <br>
         <span style="font-weight: bold; font-size: 11pt; color: black;">boorboor [AT] uic.edu</span>
       </div>
-      
+
 
       <div style="text-align: left; padding-top: 20px; display: block;">
-        <span style="font-weight: bold; color: black; font-size: 14pt;" >home</span><br>
-        <a href="publications.html">publications</a>
+        <div id="home-nav-item" class="nav-item"><span class="sidenav-title">home</span></div>
+        <div class="nav-item"><a href="publications.html">publications</a></div>
+        <div id="team-nav-item" class="nav-item"><a href="#team">team</a></div>
       </div>
       <br><br>
       <hr>
+
+
       <div style="text-align: left; padding-top: 20px;">
         <span class="sidenav-title">news and updates </span>
         <div class="news-list">
@@ -84,7 +87,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="main-content">
       <p style="font-size: 20pt">Saeed <span style="font-weight: bold">Boorboor</span></p>
       <p> I am an Assistant Professor at the <a href="https://cs.uic.edu" target="_blank">Department of Computer Science</a> at the University of Illinois Chicago. My research seeks to design, build, and evaluate <span style="font-weight: bold">visualization systems</span> that empower domain scientists to explore, analyze, and interact with scientific data, using methods of <span style="font-weight: bold">human-centered design, image processing, computer graphics, and applied AI</span>. I am also interested in investigating novel visualization and interaction methods across <span style="font-weight: bold">immersive technologies</span> -- from hand-held and wearable devices to large display modalities. &nbsp;</p>
@@ -145,8 +148,94 @@
           </div>
         </div>
       </div>
-    </div>
 
+      <!-- Team Section -->
+      <div id="team" class="team-section">
+        <div style="display: flex;align-items: center;justify-content: space-between;">
+          <div>
+            <p style="font-size: 12pt;"> I work with the wonderful team at the Electronic Visualization Laboratory (<a href="https://www-new.evl.uic.edu/" target="_new" style="text-decoration: none; font-weight: bold;">EVL</a>).
+            <br>
+            Students I supervise (ordered by time joined):</p>
+          </div>
+          <div>
+            <a href="https://www-new.evl.uic.edu/" target="_new"><img src="images/evl_logo.png" height="75px"></a>
+          </div>
+        </div>
+        <div class="team-grid">
+          <div class="team-member">
+            <img src="images/DayeYoon2.jpg" alt="Daye Yoon Headshot" onerror="this.onerror=null;this.src='https://placehold.co/150x150/EFEFEF/AAAAAA&text=Image+Not+Found';">
+            <p>Daye Yoon</p>
+            <span>2025 - </span><br>
+            <span>Ph.D. Student</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+</div>
+
+<script>
+  // This script waits for the page to load before running
+  document.addEventListener('DOMContentLoaded', () => {
+    // Find the elements we need to work with
+    const scrollContainer = document.querySelector('.main-content');
+    const teamSection = document.querySelector('#team');
+    const homeNavItem = document.querySelector('#home-nav-item');
+    const teamNavItem = document.querySelector('#team-nav-item');
+
+    // Make sure all elements exist before proceeding
+    if (!scrollContainer || !teamSection || !homeNavItem || !teamNavItem) {
+      return;
+    }
+
+    // This function will be called when the team section's visibility changes
+    const intersectionCallback = (entries) => {
+      const [entry] = entries; // We are only observing one element
+
+      if (entry.isIntersecting) {
+        // The team section is now visible.
+        history.replaceState(null, null, '#team');
+        // Change 'home' to a link that scrolls to the top.
+        homeNavItem.innerHTML = '<a href="#top">home</a>';
+        
+        // Add a click listener to the new 'home' link to handle scrolling
+        const homeLink = homeNavItem.querySelector('a');
+        if (homeLink) {
+          homeLink.addEventListener('click', (event) => {
+            // Prevent the default link behavior
+            event.preventDefault();
+            // Scroll the main content area to the top
+            scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+        
+        // Change 'team' to a non-clickable title.
+        teamNavItem.innerHTML = '<span class="sidenav-title">team</span>';
+      } else {
+        // The team section is no longer visible.
+        // We check if the user has scrolled up past the section.
+        if (entry.boundingClientRect.top > 0) {
+          // The top of the section is below the viewport, meaning we've scrolled above it.
+          history.replaceState(null, null, window.location.pathname + window.location.search);
+          // Revert 'home' to a non-clickable title.
+          homeNavItem.innerHTML = '<span class="sidenav-title">home</span>';
+          // Revert 'team' to a clickable link.
+          teamNavItem.innerHTML = '<a href="#team">team</a>';
+        }
+      }
+    };
+
+    // Set up the observer to watch the team section within the scrollable container
+    const observer = new IntersectionObserver(intersectionCallback, {
+      root: scrollContainer, // The scrollable element is the root
+      threshold: 0.1, // Trigger when 10% of the section is visible
+    });
+
+    // Start observing the team section
+    observer.observe(teamSection);
+  });
+</script>
+
 </body>
 </html>
