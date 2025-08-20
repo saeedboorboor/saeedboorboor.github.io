@@ -6,13 +6,13 @@ body {
 	font-family: Arial, sans-serif;
 	background-color: #FFFFFF;
 	margin: 0;
-    padding: 0;
+	padding: 0;
 	font-style: normal;
 	/*font-weight: 300;*/
 	font-size: 12pt;
 	/* We hide the scrollbar on the body to ensure only the content panel scrolls */
 	height: 100%;
-    overflow: hidden; 
+	overflow: hidden; 
 }
 /* Container */
 
@@ -31,13 +31,35 @@ height: 100vh; /* Set the container height to the full viewport height */
 
 .sidenav {
 	width: 320px; /* Give the sidebar a fixed width */
-    flex-shrink: 0; /* Prevent the sidebar from shrinking */
-    background-color: #f8f9fa;
-    padding: 20px;
-    /* This makes the sidebar itself scrollable if its content is too long */
-    overflow-y: auto; 
-    border-right: 1px solid #dee2e6;
-    text-align: center;
+	flex-shrink: 0; /* Prevent the sidebar from shrinking */
+	background-color: #f8f9fa;
+	padding: 20px;
+	/* This makes the sidebar itself scrollable if its content is too long */
+	/*overflow-y: auto; */
+	border-right: 1px solid #dee2e6;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	box-sizing: border-box;
+}
+
+/* The scrollable news part of the sidebar */
+.sidenav-news {
+	text-align: left;
+	margin-top: 10px;
+	padding: 0px 20px 20px 20px;
+	flex: 1; /* Allows this section to fill available space */
+	overflow-y: auto; /* Makes this section scrollable */
+	/* For Firefox */
+  scrollbar-width: none;
+  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none;
+}
+
+/* For Chrome, Safari, and Opera */
+.sidenav-news::-webkit-scrollbar {
+    display: none;
 }
 
 .sidenav a{
@@ -88,11 +110,11 @@ color: black;
 }
 
 .content {
-  padding: 0 18px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  background-color: #f1f1f1;
+	padding: 0 18px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	background-color: #f1f1f1;
 }
 
 
@@ -101,6 +123,7 @@ color: black;
 	font-weight: bold;
 	color: black;
 	font-size: 14pt;
+	text-align: left;
 }
 
 .news-list {
@@ -122,11 +145,11 @@ color: black;
 
 .main-content {
 	flex-grow: 1; /* Allows this area to take up all remaining space */
-    padding: 20px 40px;
-    /* This is the key: it makes the main content area scrollable */
-    overflow-y: auto;
-    /* This enables the smooth scrolling animation */
-    scroll-behavior: smooth;
+	padding: 20px 40px;
+	/* This is the key: it makes the main content area scrollable */
+	overflow-y: auto;
+	/* This enables the smooth scrolling animation */
+	scroll-behavior: smooth;
 }
 
 
