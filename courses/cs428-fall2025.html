@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 428 - Virtual, Augmented, and Mixed Reality</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Using the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Style for table headers */
+        th {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        /* Offset for anchor links to account for fixed headers if any */
+        section[id] {
+            scroll-margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-8">
+            <img src="imgs/vr-banner.png" >
+            <br>
+            <h1 class="text-3xl md:text-4xl font-bold text-[#C00000]">CS 428 - Virtual, Augmented, and Mixed Reality</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">Department of Computer Science, University of Illinois Chicago</p>
+            <p class="text-md text-gray-500 mt-1">Fall 2025 | Tues & Thurs: 2:00 - 3:15 p.m. | TBH 180F</p>
+        </header>
+
+        <div class="md:flex md:space-x-12">
+            <!-- Left Sidebar: Table of Contents -->
+            <aside class="w-full md:w-1/4 lg:w-1/5 mb-8 md:mb-0">
+                <div class="sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">Navigate</h3>
+                    <nav>
+                        <ul class="space-y-2">
+                            <li><a href="#overview" class="text-gray-600 hover:text-[#C00000] hover:underline">Course Overview</a></li>
+                            <li><a href="#contact" class="text-gray-600 hover:text-[#C00000] hover:underline">Instructor & TA Info</a></li>
+                            <li><a href="#materials" class="text-gray-600 hover:text-[#C00000] hover:underline">Course Content</a></li>
+                            <li><a href="#schedule" class="text-gray-600 hover:text-[#C00000] hover:underline">Syllabus & Schedule</a></li>
+                            <li><a href="#assignments" class="text-gray-600 hover:text-[#C00000] hover:underline">Assignments</a></li>
+                            <li><a href="#requirements" class="text-gray-600 hover:text-[#C00000] hover:underline">Requirements</a></li>
+                            <li><a href="#grading" class="text-gray-600 hover:text-[#C00000] hover:underline">Grading</a></li>
+                            <li><a href="#policies" class="text-gray-600 hover:text-[#C00000] hover:underline">Course Policies & Disclaimers</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Right Content Area -->
+            <div class="w-full md:w-3/4 lg:w-4/5">
+                <main>
+                    <!-- Course Overview Section -->
+                    <section id="overview" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Course Overview</h2>
+                        <p class="mb-4">
+                            In this hands-on course, you will dive into the core technologies shaping the future: Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) – collectively called eXtended Reality (XR). Students will gain hands-on experience with cutting-edge hardware and software tools while examining the technical, perceptual, and experiential foundations of immersive environments. We will traverse a landscape that includes 3D interaction, spatial computing, human-centered design, and real-world applications spanning science, education, art, and industry. Whether through a headset or a handheld device, you’ll learn to bridge physical and digital worlds, crafting experiences that inform, inspire, and transform. This isn't just about learning to code; it's about becoming an architect of perception and designing the next frontier of how we play, work, and connect.
+                        </p>
+                        <h3 class="text-xl font-semibold text-[#C00000] mt-6 mb-3">Course Learning Objectives:</h3>
+                        <ul class="list-disc list-outside space-y-2 ml-5">
+                            <li><strong>Describe</strong> the theoretical foundations and historical evolution of VR, AR, and MR technologies.</li>
+                            <li><strong>Implement</strong> interactive immersive applications using modern development frameworks (e.g., Unity, Google Cardboard, WebXR, ARCore/ARKit).</li>
+                            <li><strong>Compare</strong> the capabilities and limitations of head-mounted displays, handheld devices, and large-scale immersive systems.</li>
+                            <li><strong>Design</strong> effective 3D user interfaces that support natural interaction and spatial awareness.</li>
+                            <li><strong>Critically evaluate</strong> immersive experiences for usability, accessibility, and ethical implications.</li>
+                            <li><strong>Explore</strong> UIC’s CAVE pioneer immersive visualization facility.</li>
+                        </ul>
+                    </section>
+
+                    <!-- Instructor and TA Information Section -->
+                    <section id="contact" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Instructor & TA Information</h2>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-[#C00000]">Instructor</h3>
+                                <p>Saeed Boorboor</p>
+                                <p><strong>Webpage:</strong> <a href="https://saeedboorboor.github.io/" class="text-blue-500 hover:underline">saeedboorboor.github.io</a></p>
+                                <p><strong>Email:</strong> boorboor [AT] uic.edu</p>
+                                <p><strong>Office Hours:</strong> Tues & Thurs 4:00 - 5:00 p.m. (CDLRC 5432)</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-[#C00000]">Teaching Assistant</h3>
+                                <p>TBD</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Course Materials Section -->
+                    <section id="materials" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Course Content Resources</h2>
+                        <p class="mb-4">There is no official textbook, but the course content is inspired by the following books:</p>
+                        <ul class="list-disc list-outside space-y-2 ml-5">
+                            <li><strong>Virtual Reality</strong> by Steven M. LaValle. Cambridge University Press, 2017. (Available for free at <a href="http://lavalle.pl/vr/" class="text-blue-500 hover:underline">http://lavalle.pl/vr/</a>)</li>
+                            <li><strong>The VR Book: Human-Centered Design for Virtual Reality</strong> by Jason Jerald. Association for Computing Machinery, 2015.</li>
+                            <li><strong>3D User Interfaces: Theory and Practice, 2nd Edition</strong> by J. LaViola Jr., et al. Addison-Wesley, 2017.</li>
+                            <li><strong>Augmented Reality: Principles and Practice</strong> by D. Schmalstieg and T. Höllerer. Addison-Wesley, 2016.</li>
+                        </ul>
+                        <p class="mt-4 italic text-gray-600">Additional reading materials will be announced online and in class.</p>
+                    </section>
+
+                    <!-- Schedule Section -->
+                    <section id="schedule" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Syllabus and Schedule</h2>
+                        
+                        <!-- Legend for table colors -->
+                        <div class="flex flex-wrap gap-x-4 gap-y-2 mb-4 text-sm">
+                            <div class="flex items-center">
+                                <span class="w-4 h-4 rounded-full bg-red-200 mr-2"></span>
+                                <span>Exam</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-4 h-4 rounded-full bg-blue-200 mr-2"></span>
+                                <span>Tutorial</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-4 h-4 rounded-full bg-green-200 mr-2"></span>
+                                <span>Assignment Due</span>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border border-gray-200 rounded-lg">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Date</th>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Topic</th>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Readings</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr><td class="px-4 py-2">Aug 26</td><td class="px-4 py-2">Introduction to AR/VR/MR</td><td class="px-4 py-2">SL Ch. 1-2</td></tr>
+                                    <tr class="bg-blue-100"><td class="px-4 py-2">Aug 28</td><td class="px-4 py-2">Unity Tutorial I (working with Unity and deploying projects)</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Sept 2</td><td class="px-4 py-2">"Immersion, Presence, and Reality"</td><td class="px-4 py-2">VR Ch. 4</td></tr>
+                                    <tr><td class="px-4 py-2">Sept 4</td><td class="px-4 py-2">Geometry & Transformations</td><td class="px-4 py-2">SL Ch. 3.1-3.3</td></tr>
+                                    <tr><td class="px-4 py-2">Sept 9</td><td class="px-4 py-2">Geometry & Transformations (cont.)</td><td class="px-4 py-2">SL Ch. 3.1-3.3</td></tr>
+                                    <tr class="bg-blue-100"><td class="px-4 py-2">Sept 11</td><td class="px-4 py-2">Unity Tutorial II (practicing geometry and transformations)</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Sept 16</td><td class="px-4 py-2">Viewing and Projections</td><td class="px-4 py-2">SL Ch. 3.4-3.5</td></tr>
+                                    <tr><td class="px-4 py-2">Sept 18</td><td class="px-4 py-2">Viewing and Projections (cont.)</td><td class="px-4 py-2">SL Ch. 3.4-3.5</td></tr>
+                                    <tr><td class="px-4 py-2">Sept 23</td><td class="px-4 py-2">Interaction and 3D User Interfaces: Introduction</td><td class="px-4 py-2">SL Ch. 10.1, 10.3-10.5 (JL Ch. 6-9, VR Ch. 25-26)</td></tr>
+                                    <tr class="bg-green-100"><td class="px-4 py-2 font-semibold">Sept 25</td><td class="px-4 py-2 font-semibold">Assignment 1 Presentation and Grading</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Sept 30</td><td class="px-4 py-2">Interaction and 3D User Interfaces: Selection</td><td class="px-4 py-2">SL Ch. 10.1, 10.3-10.5 (JL Ch. 6-9)</td></tr>
+                                    <tr><td class="px-4 py-2">Oct 2</td><td class="px-4 py-2">Interaction and 3D User Interfaces: Manipulation</td><td class="px-4 py-2">SL Ch. 10.1, 10.3-10.5 (JL Ch. 6-9)</td></tr>
+                                    <tr><td class="px-4 py-2">Oct 7</td><td class="px-4 py-2">Interaction and 3D User Interfaces: Navigation</td><td class="px-4 py-2">SL Ch. 10.2 (JL Ch. 6-9, DS Ch. 8)</td></tr>
+                                    <tr class="bg-red-100"><td class="px-4 py-2 font-semibold">Oct 9</td><td class="px-4 py-2 font-semibold">Exam I</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Oct 14</td><td class="px-4 py-2">Light and Optics</td><td class="px-4 py-2">SL Ch. 4.1-4.4</td></tr>
+                                    <tr class="bg-green-100"><td class="px-4 py-2 font-semibold">Oct 16</td><td class="px-4 py-2 font-semibold">Assignment 2 Presentation and Grading</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Oct 21</td><td class="px-4 py-2">Physiology of Human Vision</td><td class="px-4 py-2">SL Ch. 5, 6.3</td></tr>
+                                    <tr><td class="px-4 py-2">Oct 23</td><td class="px-4 py-2">Visual Perception: Depth</td><td class="px-4 py-2">SL Ch. 6.1</td></tr>
+                                    <tr><td class="px-4 py-2">Oct 28</td><td class="px-4 py-2">Visual Perception: Motion</td><td class="px-4 py-2">SL Ch. 6.2</td></tr>
+                                    <tr><td class="px-4 py-2">Oct 30</td><td class="px-4 py-2">Fundamentals of Augmented Reality</td><td class="px-4 py-2">(DS 1-2)</td></tr>
+                                    <tr class="bg-blue-100"><td class="px-4 py-2">Nov 4</td><td class="px-4 py-2">Unity Tutorial III (AR Foundation)</td><td class="px-4 py-2">SL Ch. 9</td></tr>
+                                    <tr><td class="px-4 py-2">Nov 6</td><td class="px-4 py-2">Fundamentals of Augmented Reality (cont.)</td><td class="px-4 py-2">(DS 1-2)</td></tr>
+                                    <tr><td class="px-4 py-2">Nov 11</td><td class="px-4 py-2">Tracking and Mapping</td><td class="px-4 py-2">SL Ch. 9</td></tr>
+                                    <tr><td class="px-4 py-2">Nov 13</td><td class="px-4 py-2">Tracking and Mapping (cont.)</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Nov 18</td><td class="px-4 py-2">Immersive Analytics</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2">Nov 20</td><td class="px-4 py-2">Non-visual senses in XR</td><td class="px-4 py-2">SL Ch. 11, 13</td></tr>
+                                    <tr class="bg-green-100"><td class="px-4 py-2 font-semibold">Nov 25</td><td class="px-4 py-2 font-semibold">Assignment 3 Presentation and Grading</td><td class="px-4 py-2"></td></tr>
+                                    <tr><td class="px-4 py-2 bg-yellow-100">Nov 27</td><td class="px-4 py-2 bg-yellow-100">THANKSGIVING BREAK</td><td class="px-4 py-2 bg-yellow-100"></td></tr>
+                                    <tr><td class="px-4 py-2">Dec 2</td><td class="px-4 py-2">Evaluating XR Systems and Experiences</td><td class="px-4 py-2">SL Ch. 12</td></tr>
+                                    <tr class="bg-red-100"><td class="px-4 py-2 font-semibold">Dec 4</td><td class="px-4 py-2 font-semibold">Exam II</td><td class="px-4 py-2"></td></tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            *SL = VIRTUAL REALITY by Steve LaValle.;  JL= Joseph LaViola et al., 3D User Interfaces: Theory and Practice, 2nd Edition  (recommended reading); DS= Dieter Schmalstieg, Augmented Reality: Principles and Practice (recommended readings); VR = The VR Book: Human-Centered Design for Virtual Reality 
+                        </div>
+                    </section>
+                    
+                    <!-- Assignments Section -->
+                    <section id="assignments" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Assignments</h2>
+                        <p class="mb-4">There will be three assignments plus one warm-up assignment. Each of the main assignments is worth 20% of the final grade, except Assignment 0, which is worth 5% of the final grade.</p>
+                        <ul class="list-decimal list-inside space-y-2">
+                            <li><strong>Assignment 0:</strong> Unity 3D warm-up (5% of final grade)</li>
+                            <li><strong>Assignment 1:</strong> Basic VR</li>
+                            <li><strong>Assignment 2:</strong> 3D User Interfaces</li>
+                            <li><strong>Assignment 3:</strong> Augmented Reality</li>
+                        </ul>
+                        <h3 class="text-xl font-semibold text-[#C00000] mt-6 mb-3">Assignments Schedule:</h3>
+                        <ul class="list-disc list-outside space-y-2 ml-5">
+                            <li><strong>Assignment 0:</strong> will be released on the first day of class. You will automatically receive full points on submission. While it will not be checked, you must attempt it fully and consult with the TA if you have any questions to prepare for future assignments.</li>
+                            <li><strong>Assignment 1:</strong> Released on Sept 2, graded in class on Sept 25.</li>
+                            <li><strong>Assignment 2:</strong> Released on Sept 25, graded in class on Oct 16.</li>
+                            <li><strong>Assignment 3:</strong> Released on Oct 30, graded in class on Nov 18.</li>
+                        </ul>
+                        <br>
+                        <p>In addition to in-class evaluation, the students are expected to submit an assignment report by 11.59 p.m. Central Time on the same day as the assigned in-class date.</p>
+                    </section>
+
+                    <!-- Hardware and Software Requirements Section -->
+                    <section id="requirements" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Hardware & Software Requirements</h2>
+                        
+                        <h3 class="text-xl font-semibold text-[#C00000] mt-6 mb-3">Hardware</h3>
+                        <p class="mb-4">Each student is required to have the following hardware:</p>
+                        <ul class="list-disc list-outside space-y-2 ml-5">
+                            <li>A programmable smartphone or tablet (Android 6.0+ or iOS 13.0+).</li>
+                            <li>A basic headset that will hold your smartphone (or tablet), such as <a href="https://arvr.google.com/cardboard/" target="_blank" class="text-blue-500 hover:underline">Google Cardboard</a> (available online on <a href="https://www.amazon.com/google-cardboard/s?k=google+cardboard" target="_blank" class="text-blue-500 hover:underline"> Amazon </a>or any online store). Additionally, you may want to consider VR headsets with phone inserts (such as the <a href="https://www.amazon.com/Google-Daydream-View-Headset-Slate/dp/B01N634P7O?th=1" target="_blank" class="text-blue-500 hover:underline">Google Daydream</a>) that are more sturdy than a Google Cardboard.</li>
+                            <li>For Assignment 2, a VR gamepad controller. <span class="italic">Suggested: <a href="https://www.amazon.com/VR-Controller-Gamepad-Bluetooth-Control/dp/B01NAPASM1/ref=pd_bxgy_d_sccl_1/135-8682855-8583366?pd_rd_w=Ln4dc&content-id=amzn1.sym.2b132e63-5dcd-4ba1-be9f-9e044543d59f&pf_rd_p=2b132e63-5dcd-4ba1-be9f-9e044543d59f&pf_rd_r=YH0EKE8H02N0X771HN5K&pd_rd_wg=3XsSM&pd_rd_r=8270a2ef-650c-47fe-be7f-474a270dc792&pd_rd_i=B01NAPASM1&th=1" target="_blank" class="text-blue-500 hover:underline"> VR Empire Game Controller</a></span></li>
+                        </ul>
+                        <div class="flex flex-wrap justify-center gap-4 my-6">
+                           <!-- <img src="https://placehold.co/150x100/e2e8f0/4a5568?text=Cardboard+VR" alt="Google Cardboard" class="rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/150x100/e2e8f0/4a5568?text=Image+Not+Found';"> -->
+                           <!-- Container for the image and its caption -->
+                           <div class="text-center">
+                               <img src="imgs/cardboard.jpg" alt="Google Cardboard" class="rounded-lg shadow-md h-[100px]" onerror="this.onerror=null;this.src='https://placehold.co/150x100/e2e8f0/4a5568?text=Image+Not+Found';">
+                               <p class="mt-2 text-sm text-gray-700">Google Cardboard</p>
+                           </div>
+                           <!-- <img src="https://placehold.co/150x100/e2e8f0/4a5568?text=Daydream+VR" alt="Google Daydream" class="rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/150x100/e2e8f0/4a5568?text=Image+Not+Found';"> -->
+                           <div class="text-center">
+                               <img src="imgs/google-daydream.jpg" alt="Google Cardboard" class="rounded-lg shadow-md h-[100px]" onerror="this.onerror=null;this.src='https://placehold.co/150x100/e2e8f0/4a5568?text=Image+Not+Found';">
+                               <p class="mt-2 text-sm text-gray-700">Google Daydream</p>
+                           </div>
+                           <!-- <img src="https://placehold.co/150x100/e2e8f0/4a5568?text=VR+Controller" alt="VR Gamepad" class="rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/150x100/e2e8f0/4a5568?text=Image+Not+Found';"> -->
+                           <div class="text-center">
+                               <img src="imgs/controller.jpg" alt="Google Cardboard" class="rounded-lg shadow-md h-[100px]" onerror="this.onerror=null;this.src='https://placehold.co/150x100/e2e8f0/4a5568?text=Image+Not+Found';">
+                               <p class="mt-2 text-sm text-gray-700">VR Controller</p>
+                           </div>
+                       </div>
+                       <p>You may search online for alternatives, but it is strongly advised that you carefully check the compatibility information (such as application platform and Bluetooth version) of the devices before making a purchase.</p><br>
+
+                       <p class="italic text-gray-600">Please consult the course instructor if you need financial help with purchasing the equipment.</p>
+                       <br>
+
+                       <h3 class="text-xl font-semibold text-[#C00000] mt-8 mb-3">Software</h3>
+                       <div>
+                        <br>
+                        <img src="imgs/unity.png" alt="Unity Logo" class="rounded-lg float-left mr-4 mb-2 h-[50px]" onerror="this.onerror=null;this.src='https://placehold.co/100x100/e2e8f0/4a5568?text=Image+Not+Found';">
+                        <p>The software environment for all your assignments is Unity. Unity is a cross-platform open-source game engine developed by Unity Technologies; as of today, it supports more than 19 platforms. Unity can be used to create both three-dimensional (3D) and two-dimensional (2D) games and virtual reality (VR) environments, as well as simulations or emulations for its many platforms, including hand-held, head-worn, stationary displays, and desktops. The basic version of Unity is free and sufficient for all assignments.</p>
+
+                        <p class="mt-2"> In Assignment 3, Augmented Reality (AR), the surrounding real world is overlaid with computer-generated imagery. To support AR, Unity’s AR Foundation will be used. It is a framework for AR application development in various mobile environments. It uses computer vision technology to recognize and track in real-time 3D simple objects and image targets, enabling the registration of the real world and virtual objects. AR Foundation enables the development of applications in both iOS and Android and is easily portable to both platforms.</p>
+
+                        <p class="mt-2">Assignment 0 (with 5% credit) is a basic assignment in Unity, a mini tutorial for Unity, just to get you started. Assignment 0 is already available; you can start working on it now. Unity tutorial sessions are scheduled during class time, as outlined in the syllabus schedule.
+                        </p>
+                    </div>
+                </section>
+
+
+
+
+
+                <!-- Grading Section -->
+                <section id="grading" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Grading</h2>
+                    <ul class="list-none space-y-2">
+                        <li><strong>Assignments (3x20% + 1x5%):</strong> 65%</li>
+                            <li><strong>Exams (2x15%):</strong> 30%</li>
+                        <li><strong>Attendance + Class Participation:</strong> 5%</li>
+                    </ul>
+                    <br>
+                    <p>Letter grades will be based on a straight scale using the following thresholds for grade cut-offs: <strong>A</strong> ranges from 85-100%, <strong>B</strong> ranges from 75-84.9%, <strong>C</strong> ranges from 70-74.9%, <strong>D</strong> ranges from 60-69.9%, and <strong>F</strong> for 59.9% or lower. However, strong attendance and participation may be taken into account in borderline situations, allowing a slightly lower percentage (e.g., 74.75%) to be rounded up. </p>
+                    <br>
+
+                    <p>Under no circumstances will grades be adjusted down. You can use this straight grading scale as an indicator of your minimum grade in the course at any time during the course. You should keep track of your own points so that at any time during the semester you may calculate your minimum grade based on the total number of points possible at that particular time. If and when, for any reason, you have concerns about your grade in the course, please see me in during my office hours so that we can discuss study techniques or alternative strategies to help you.</p>
+                    <br>
+
+                    <p>You have two weeks after each grade is released to raise any concerns or questions regarding their marks. Beyond this two-week window, no further inquiries or revisions to the grade will be considered.</p>
+                </section>
+
+                <!-- Policies Section -->
+                <section id="policies" class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold text-[#C00000] border-b pb-2 mb-4">Course Policies</h2>
+                    The student is responsible for all the material mentioned in class (either by the instructor or during discussions) and all the assigned readings announced in class and/or listed online. Therefore, students are expected to attend every class. If you miss one class, please talk to those who attended to catch up with the course material. Note that additions or changes may be announced in class and will be updated on the course webpage. All the course material will be on the course website INSERT and on Blackboard, as will be announced from time to time. Class announcements will be communicated via email and found on the course webpage.
+                    <br><br>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-[#C00000]">Assignments Late Submission Policy</h3>
+                        <p>Requests for assignment extensions will not be considered. If you are unable to complete your assignment by the in-class presentation, it will be your responsibility to arrange a grading session with the TA during their office hours. You are, however, granted two “1-week extension” passes. This means that if you submit your assignment for evaluation up to one week after the original due date, you may use one pass to avoid a late submission penalty. These passes can also be used consecutively, allowing you to have your assignment evaluated up to two weeks after the in-class presentation. If you choose not to use a pass or exhaust your available passes, a penalty of 2% will be deducted for each week of delayed submission during office hours. Additionally, please note that you cannot claim your pass later in the semester for an assignment that has already been evaluated and penalized for late submission.</p>
+                        <br>
+
+                        <h3 class="text-xl font-semibold text-[#C00000]">Academic Integrity</h3>
+                        <p>UIC is an academic community committed to providing an environment in which research, learning, and scholarship can flourish and in which all endeavors are guided by academic and professional integrity. In this community, all members, including faculty, administrators, staff, and students alike, share the responsibility to uphold the highest standards of academic honesty and quality of academic work so that such a collegial and productive environment exists.</p>
+                        <p>As a student and member of the UIC community, you are expected to adhere to the <a href="https://dos.uic.edu/community-standards/" class="text-blue-500 hover:underline">Community Standards</a> of integrity, accountability, and respect in all of your academic endeavors. When <a href="https://dos.uic.edu/community-standards/academic-integrity/" class="text-blue-500 hover:underline">accusations of academic dishonesty</a> occur, the Office of the Dean of Students investigates and adjudicates suspected violations of this student code. Unacceptable behavior includes cheating, unauthorized collaboration, fabrication or falsification, plagiarism, multiple submissions without instructor permission, using unauthorized study aids, coercion regarding grading or evaluation of coursework, and facilitating academic misconduct. Please review the <a href="https://dos.uic.edu/wp-content/uploads/sites/262/2018/10/DOS-Student-Disciplinary-Policy-2018-2019-FINAL.pdf" class="text-blue-500 hover:underline">UIC Student Disciplinary Policy</a> for additional information about the process by which instances of academic misconduct are handled towards the goal of developing responsible student behavior.</p>
+                        <p>By submitting your assignments for grading, you acknowledge these terms, you declare that your work is solely your own, and you promise that, unless authorized by the instructor or proctor, you have not communicated with anyone in any way during an exam or other online assessment. Let's embrace what it means to be a UIC community member and together be committed to the values of integrity.</p>
+                        <p>Our class will follow the <a href="https://www.cs.uic.edu/~grad/CS_Code_of_Conduct.pdf" class="text-blue-500 hover:underline">CS Code of Conduct</a>. If you are not adhering to our course norms, a case of behavior misconduct will be submitted to the Dean of Students and to the Director of Undergraduate Studies in the department of Computer Science. If you are not adhering to our course norms, you will not get full credit for your work in this class. For extreme cases of violating the course norms, credit for the course will not be given.
+                        All the work you submit must be your own; you should not use paraphrasing software like (QuillBot), or AI software for writing (like ChatGPT), or any AI tool for code generation to solve assignments – unless explicitly allowed to do so. If in doubt about a specific tool, ask.</p>
+                        <br>
+
+                        <h3 class="text-xl font-semibold text-[#C00000]">Inclusive Learning Environment</h3>
+                        <p>UIC values diversity and inclusion. Regardless of age, disability, ethnicity, race, gender, gender identity, sexual orientation, socioeconomic status, geographic background, religion, political ideology, language, or culture, we expect all members of this class to contribute to a respectful, welcoming, and inclusive environment for every other member of our class. If there are aspects of the instruction or design of this course that result in barriers to your inclusion, engagement, accurate assessment or achievement, please notify me as soon as possible.</p>
+                        <br>
+
+                        <h3 class="text-xl font-semibold text-[#C00000]">Disability Accommodation</h3>
+                        <p>UIC is committed to full inclusion and participation of people with disabilities in all aspects of university life. If you face or anticipate disability-related barriers while at UIC, please connect with the <a href="https://drc.uic.edu/" class="text-blue-500 hover:underline">  Disability Resource Center (DRC) </a>, via email at drc@uic.edu, or call (312) 413-2183 to create a plan for reasonable accommodations. In order to receive accommodations, you will need to disclose the disability to the DRC, complete an interactive registration process with the DRC, and provide me with a Letter of Accommodation (LOA). Upon receipt of a LOA, I will gladly work with you and the DRC to implement approved accommodations.</p>
+                        <br>
+
+                        <h3 class="text-xl font-semibold text-[#C00000]">Religious Holidays</h3>
+                        <p>
+                            I will make every effort to avoid scheduling exams or requiring student projects be submitted on religious holidays. If you wish to observe your religious holidays, please notify me by the tenth day of the semester of the date when you will be absent unless the religious holiday is observed on or before the tenth day of the semester. In such cases, please notify me at least five days in advance of the date when you will be absent. I will make every reasonable effort to honor your request and not penalize you for missing the class. If an examination or project is due during your absence, you will be given an exam or assignment equivalent to the one completed by those students in attendance. Students may appeal through campus grievance procedures for religious accommodations.
+                        </p>
+                        <br>
+
+                        <h3 class="text-xl font-semibold text-[#C00000]">Mental and Emotional Wellness</h3>
+                        <p>
+                            Counseling Services are available for all UIC students. You may seek free and confidential services from the Counseling Center at https://counseling.uic.edu/. The Counseling Center is located in the Student Services Building; you may contact them at (312) 996-3490 during normal business hours (M-F, 9 am -5 pm). If calling after hours, press 2 to be connected to a crisis counselor. In addition to offering counseling services, the Counseling Center also operates the InTouch Crisis Hotline from 6:00 p.m.-10:30 p.m. They offer support and referrals to callers, as well as telephone crisis interventions; please call (312) 996-5535.
+                        </p>
+                        <br>
+
+                        <h3 class="text-xl font-semibold text-[#C00000]">Campus Advocacy Network</h3>
+                        <p>
+                            The Campus Advocacy Network provides information and offers resources to all UIC students, faculty, and staff. Under the Title IX law you have the right to an education that is free from any form of gender-based violence and discrimination. Crimes of sexual assault, domestic violence, sexual harassment, and stalking are against the law and can be prevented. For more information or for confidential victim-services and advocacy, contact UIC's Campus Advocacy Network at 312-413-1025 or visit http://can.uic.edu/. To make a report to UIC's Title IX office, email TitleIX@uic.eduor call (312) 996-5657.
+                        </p>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="text-center mt-8 py-4 border-t">
+                <p class="text-sm text-gray-500">&copy; 2025 Saeed Boorboor | University of Illinois Chicago - Department of Computer Science</p>
+            </footer>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -126,6 +126,18 @@ color: black;
 	text-align: left;
 }
 
+
+.nav-item.active a {
+     color: black;
+     font-weight: bold;
+     pointer-events: none; /* Makes the link non-clickable */
+     cursor: default;
+ }
+ .nav-item::after {
+   	content: none;
+   }
+
+
 .news-list {
 	font-size: 11pt;
 	color: dimgray;
@@ -150,6 +162,13 @@ color: black;
 	overflow-y: auto;
 	/* This enables the smooth scrolling animation */
 	scroll-behavior: smooth;
+}
+
+/* General styles for content sections */
+.content-section {
+ padding-top: 20px;
+ padding-bottom: 20px;
+ scroll-margin-top: 20px;
 }
 
 
