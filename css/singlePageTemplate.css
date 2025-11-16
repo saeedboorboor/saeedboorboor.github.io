@@ -174,11 +174,12 @@ color: black;
 
 
 /* Original styles for tags within publication entries (these are the "active" colors) */
-.tags-input-journal { background-color: #ddd; color: black; }
-.tags-input-conference { background-color: #ffe873; color: black; }
-.tags-input-immersive { background-color: darkseagreen; color: whitesmoke; }
-.tags-input-scivis { background-color: #7ac3ff; color: black; }
-.tags-input-biomedical { background-color: #ffc57a; color: black; }
+.tags-input-journal { background-color: #b3cde3; color: black; }
+.tags-input-conference { background-color: #ccebc5; color: black; }
+.tags-input-workshop { background-color: #decbe4; color: black; }
+.tags-input-immersive { background-color: #fbb4ae; color: black; }
+.tags-input-scivis { background-color: #fed9a6; color: black; }
+.tags-input-biomedical { background-color: #fff2ae; color: black; }
 
 /* Common properties for ALL tags (both in-publication divs and filter buttons) */
 /* This rule applies base styling to both the original div tags and the new filter buttons */
@@ -222,23 +223,23 @@ color: black;
    }
 
    .tag-filter-button.active[data-tag="AR/VR/MR"] {
-   	background-color: darkseagreen;
-   	color: whitesmoke;
-   	border-color: #5f9e5f;
+   	background-color: #fbb4ae;
+   	color: black;
+   	/*border-color: #5f9e5f;*/
    	font-weight: normal;
    }
 
    .tag-filter-button.active[data-tag="SciVis"] {
-   	background-color: #7ac3ff;
+   	background-color: #fed9a6;
    	color: black;
-   	border-color: #5a9edb;
+   	/*border-color: #5a9edb;*/
    	font-weight: normal;
    }
 
    .tag-filter-button.active[data-tag="Biomedical"] {
-   	background-color: #ffc57a;
+   	background-color: #fff2ae;
    	color: black;
-   	border-color: #e0a55a;
+   	/*border-color: #e0a55a;*/
    	font-weight: normal;
    }
 
