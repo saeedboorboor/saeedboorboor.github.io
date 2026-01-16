@@ -301,6 +301,15 @@ ul.news-list li {
 	background-color: #efefef; /* Placeholder background */
 }
 
+.team-member img.icon {
+	width: 35px;
+	height: auto;
+	border-radius: 0;
+	object-fit: contain;
+	background: none;
+	margin-bottom: 0;
+}
+
 .team-member p {
 	font-weight: bold;
 	margin: 0;
