@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 428 - Virtual, Augmented, and Mixed Reality (Fall 2026)</title>
+    <meta name="description" content="CS 428: Virtual, Augmented, and Mixed Reality. Department of Computer Science, University of Illinois Chicago. Fall 2026.">
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -0.015em; }
+        section[id] { scroll-margin-top: 2rem; }
+
+        /* Card lift on hover */
+        .card { transition: box-shadow .25s ease, transform .25s ease; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -12px rgba(15,23,42,.25); }
+
+        /* Section heading accent bar */
+        .accent::before {
+            content: ''; display: inline-block; vertical-align: -2px;
+            width: 5px; height: 1.15em; margin-right: .6rem; border-radius: 999px;
+            background: linear-gradient(180deg, #C00000, #f0724f);
+        }
+
+        /* Active section in the sidebar nav */
+        #toc a.active { font-weight: 700; color: #C00000; background: #fff; box-shadow: 0 1px 2px rgba(15,23,42,.06); }
+
+        /* Sticky schedule header */
+        .sched thead th { position: sticky; top: 0; z-index: 1; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .card { transition: none; }
+            .card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-700">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
+
+        <!-- Hero -->
+        <header class="relative overflow-hidden rounded-2xl mb-10 shadow-xl">
+            <img src="imgs/vr-banner.png" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/40"></div>
+            <div class="relative px-6 py-12 sm:px-10 sm:py-16 lg:py-20 text-white">
+                <span class="inline-block px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.15em] uppercase bg-white/15 ring-1 ring-white/25 backdrop-blur-sm">
+                    Fall 2026
+                </span>
+                <h1 class="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight max-w-3xl">
+                    CS 428 &mdash; Virtual, Augmented,<br class="hidden sm:block"> and Mixed Reality
+                </h1>
+                <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl">
+                    Department of Computer Science, University of Illinois Chicago
+                </p>
+                <div class="mt-7 flex flex-wrap gap-2.5 text-sm">
+                    <span class="px-3.5 py-1.5 rounded-lg bg-white/10 ring-1 ring-white/20 backdrop-blur-sm">Tues &amp; Thurs &middot; 2:00 &ndash; 3:15 p.m.</span>
+                    <span class="px-3.5 py-1.5 rounded-lg bg-white/10 ring-1 ring-white/20 backdrop-blur-sm">CDRLC 1405</span>
+                    <span class="px-3.5 py-1.5 rounded-lg bg-white/10 ring-1 ring-white/20 backdrop-blur-sm">Saeed Boorboor</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="md:flex md:space-x-10">
+            <!-- Left Sidebar: Table of Contents -->
+            <aside class="w-full md:w-1/4 lg:w-1/5 mb-8 md:mb-0">
+                <div class="sticky top-6">
+                    <h3 class="text-xs font-bold uppercase tracking-[0.15em] text-slate-400 mb-3">Navigate</h3>
+                    <nav id="toc">
+                        <ul class="space-y-0.5 text-sm">
+                            <li><a href="#overview"     class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Course Overview</a></li>
+                            <li><a href="#contact"      class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Instructor Info</a></li>
+                            <li><a href="#materials"    class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Course Content</a></li>
+                            <li><a href="#schedule"     class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Syllabus &amp; Schedule</a></li>
+                            <li><a href="#studio"       class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Studio Sessions</a></li>
+                            <li><a href="#project"      class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Course Project</a></li>
+                            <li><a href="#requirements" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Requirements</a></li>
+                            <li><a href="#grading"      class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Grading</a></li>
+                            <li><a href="#policies"     class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-white hover:text-[#C00000] hover:shadow-sm transition">Course Policies</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Right Content Area -->
+            <div class="w-full md:w-3/4 lg:w-4/5">
+                <main class="space-y-6">
+
+                    <!-- Course Overview -->
+                    <section id="overview" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Course Overview</h2>
+                        <p class="leading-relaxed">
+                            In this hands-on course, you will dive into the core technologies shaping the future: Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) &ndash; collectively called eXtended Reality (XR). Students will gain hands-on experience with cutting-edge hardware and software tools while examining the technical, perceptual, and experiential foundations of immersive environments. We will traverse a landscape that includes designing and interacting with 3D virtual worlds, spatial computing, and real-world applications spanning science, education, art, and industry. Whether through a headset or a handheld device, you&rsquo;ll learn to bridge physical and digital worlds, crafting experiences that inform, inspire, and transform. This isn't just about learning to code, it's about becoming an architect of perception and designing the next frontier of how we play, work, and connect.
+                        </p>
+
+                        <h3 class="text-lg font-semibold text-slate-900 mt-8 mb-4">Course Learning Objectives</h3>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#C00000]/10 text-[#C00000]">Describe</span>
+                                <p class="mt-2 text-sm">The theoretical foundations and historical evolution of VR, AR, and MR technologies.</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-violet-100 text-violet-700">Implement</span>
+                                <p class="mt-2 text-sm">Interactive immersive applications using modern development frameworks (e.g., Unity, Google Cardboard, WebXR, ARCore/ARKit).</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-sky-100 text-sky-700">Compare</span>
+                                <p class="mt-2 text-sm">The capabilities and limitations of head-mounted displays, handheld devices, and large-scale immersive systems.</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700">Design</span>
+                                <p class="mt-2 text-sm">Effective 3D user interfaces that support natural interaction and spatial awareness.</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700">Evaluate</span>
+                                <p class="mt-2 text-sm">Immersive experiences critically for usability, accessibility, and ethical implications.</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-rose-100 text-rose-700">Explore</span>
+                                <p class="mt-2 text-sm">EVL&rsquo;s immersive visualization facility.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Instructor Information -->
+                    <section id="contact" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Instructor Information</h2>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="grid place-items-center w-11 h-11 rounded-xl bg-[#C00000] text-white font-bold">SB</span>
+                                    <div>
+                                        <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-[#C00000]">Instructor</div>
+                                        <div class="font-semibold text-slate-900">Saeed Boorboor</div>
+                                    </div>
+                                </div>
+                                <p><strong>Webpage:</strong> <a href="https://saeedboorboor.github.io/" class="text-[#C00000] hover:underline">saeedboorboor.github.io</a></p>
+                                <p><strong>Email:</strong> boorboor [AT] uic.edu</p>
+                                <p><strong>Office Hours:</strong> Tues &amp; Thurs 4:00 - 5:00 p.m. (CDRLC 5432)</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="grid place-items-center w-11 h-11 rounded-xl bg-slate-800 text-white">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4m8-4v4M3 10h18"/></svg>
+                                    </span>
+                                    <div>
+                                        <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">Class Meetings</div>
+                                        <div class="font-semibold text-slate-900">Tues &amp; Thurs</div>
+                                    </div>
+                                </div>
+                                <p><strong>When:</strong> 2:00 - 3:15 p.m.</p>
+                                <p><strong>Where:</strong> CDRLC 1405</p>
+                                <p><strong>Course material:</strong> this page and Canvas</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Course Content Resources -->
+                    <section id="materials" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Course Content Resources</h2>
+                        <p class="mb-5">There is no required textbook, but the course content is inspired by the following books:</p>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 border-l-4 border-l-[#C00000] p-4">
+                                <div class="text-[10px] font-bold uppercase tracking-wider text-[#C00000]">SL</div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">Virtual Reality</p>
+                                <p class="text-sm">Steven M. LaValle &middot; Cambridge University Press, 2017</p>
+                                <a href="http://lavalle.pl/vr/" class="text-sm text-[#C00000] hover:underline">Available free at lavalle.pl/vr</a>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 border-l-4 border-l-violet-500 p-4">
+                                <div class="text-[10px] font-bold uppercase tracking-wider text-violet-700">VR</div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">The VR Book: Human-Centered Design for Virtual Reality</p>
+                                <p class="text-sm">Jason Jerald &middot; Association for Computing Machinery, 2015 <span class="italic">[recommended for some lectures]</span></p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 border-l-4 border-l-sky-500 p-4">
+                                <div class="text-[10px] font-bold uppercase tracking-wider text-sky-700">JL</div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">3D User Interfaces: Theory and Practice, 2nd Edition</p>
+                                <p class="text-sm">J. LaViola Jr., E. Kruijff, R. McMahan, D. Bowman, and I. Poupyrev &middot; Addison-Wesley, 2017</p>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 border-l-4 border-l-emerald-500 p-4">
+                                <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">DS</div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">Augmented Reality: Principles and Practice</p>
+                                <p class="text-sm">D. Schmalstieg and T. H&ouml;llerer &middot; Addison-Wesley, 2016</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-sm">Academic publications from IEEE VIS, IEEE VR, IEEE ISMAR, IEEE TVCG, ACM UIST, ACM CHI, ACM IUI, and other related conference and journal publications.</p>
+                        <p class="mt-3 text-sm italic text-slate-500">Additional reading materials will be announced online and in class.</p>
+                    </section>
+
+                    <!-- Schedule -->
+                    <section id="schedule" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Syllabus and Schedule</h2>
+
+                        <div class="flex flex-wrap gap-x-5 gap-y-2 mb-5 text-sm">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-sky-400 mr-2"></span>Studio Session</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 mr-2"></span>Project Milestone</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 mr-2"></span>Exam</span>
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 mr-2"></span>No Class</span>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl ring-1 ring-slate-200">
+                            <table class="sched min-w-full text-sm">
+                                <thead>
+                                    <tr class="bg-slate-100">
+                                        <th class="px-4 py-3 text-left font-semibold text-slate-500 uppercase text-[11px] tracking-wider">Date</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-slate-500 uppercase text-[11px] tracking-wider">Topic</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-slate-500 uppercase text-[11px] tracking-wider">Readings</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Aug 25</td><td class="px-4 py-2.5">Introduction to AR/VR/MR</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 1-2</td></tr>
+                                    <tr class="bg-sky-50 hover:bg-sky-100"><td class="px-4 py-2.5 border-l-4 border-sky-400 whitespace-nowrap font-medium text-slate-900">Aug 27</td><td class="px-4 py-2.5">Sandbox Information Session / Studio: Unity Tutorial</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 1</td><td class="px-4 py-2.5">Immersion, Presence, and Reality</td><td class="px-4 py-2.5 text-slate-500">VR Ch. 4</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 3</td><td class="px-4 py-2.5">Geometry &amp; Transformations</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 3.1-3.3</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 8</td><td class="px-4 py-2.5">Viewing and Projections</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 3.4-3.5</td></tr>
+                                    <tr class="bg-sky-50 hover:bg-sky-100"><td class="px-4 py-2.5 border-l-4 border-sky-400 whitespace-nowrap font-medium text-slate-900">Sept 10</td><td class="px-4 py-2.5">Studio: Mesh, Geometry, and Transformations</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 15</td><td class="px-4 py-2.5">Interaction and 3D User Interfaces: Introduction</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 10.1, 10.3-10.5 (JL Ch. 6-9, VR Ch. 25-26)</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 17</td><td class="px-4 py-2.5">Interaction and 3DUI: Selection &amp; Manipulation</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 10.1, 10.3-10.5 (JL Ch. 6-9)</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 22</td><td class="px-4 py-2.5">Interaction and 3D User Interfaces: Navigation</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 10.2 (JL Ch. 6-9, DS Ch. 8)</td></tr>
+                                    <tr class="bg-sky-50 hover:bg-sky-100"><td class="px-4 py-2.5 border-l-4 border-sky-400 whitespace-nowrap font-medium text-slate-900">Sept 24</td><td class="px-4 py-2.5">Studio: 3D Interactions</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Sept 29</td><td class="px-4 py-2.5">Foundations of Augmented Reality</td><td class="px-4 py-2.5 text-slate-500">(DS 1-2)</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Oct 1</td><td class="px-4 py-2.5">Tracking and Mapping</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 9</td></tr>
+                                    <tr class="bg-sky-50 hover:bg-sky-100"><td class="px-4 py-2.5 border-l-4 border-sky-400 whitespace-nowrap font-medium text-slate-900">Oct 6</td><td class="px-4 py-2.5">Studio: AR and Tracking</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-emerald-50 hover:bg-emerald-100"><td class="px-4 py-2.5 border-l-4 border-emerald-400 whitespace-nowrap font-semibold text-slate-900">Oct 8</td><td class="px-4 py-2.5 font-semibold text-slate-900">Project Proposal Presentation</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Oct 13</td><td class="px-4 py-2.5">Light and Optics</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 4.1-4.4</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Oct 15</td><td class="px-4 py-2.5">Physiology of Human Vision</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 5, 6.3</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Oct 20</td><td class="px-4 py-2.5">Visual Perception: Motion</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 6.1</td></tr>
+                                    <tr class="bg-sky-50 hover:bg-sky-100"><td class="px-4 py-2.5 border-l-4 border-sky-400 whitespace-nowrap font-medium text-slate-900">Oct 22</td><td class="px-4 py-2.5">Studio: Apple Vision Pro @ Sandbox</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Oct 27</td><td class="px-4 py-2.5">Visual Perception: Depth</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 6.2</td></tr>
+                                    <tr class="bg-emerald-50 hover:bg-emerald-100"><td class="px-4 py-2.5 border-l-4 border-emerald-400 whitespace-nowrap font-semibold text-slate-900">Oct 29</td><td class="px-4 py-2.5 font-semibold text-slate-900">Project Milestone I Presentation</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-rose-50 hover:bg-rose-100"><td class="px-4 py-2.5 border-l-4 border-rose-500 whitespace-nowrap font-semibold text-slate-900">Nov 3</td><td class="px-4 py-2.5 font-semibold text-slate-900">EXAM</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Nov 5</td><td class="px-4 py-2.5">Evaluating XR Systems and Experiences</td><td class="px-4 py-2.5 text-slate-500">SL Ch. 12</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Nov 10</td><td class="px-4 py-2.5">Project Tutorial Session</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Nov 12</td><td class="px-4 py-2.5">Project Tutorial Session</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="px-4 py-2.5 border-l-4 border-transparent whitespace-nowrap font-medium text-slate-900">Nov 17</td><td class="px-4 py-2.5">Emerging XR Technologies</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-emerald-50 hover:bg-emerald-100"><td class="px-4 py-2.5 border-l-4 border-emerald-400 whitespace-nowrap font-semibold text-slate-900">Nov 19</td><td class="px-4 py-2.5 font-semibold text-slate-900">Project Milestone II Presentation</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-sky-50 hover:bg-sky-100"><td class="px-4 py-2.5 border-l-4 border-sky-400 whitespace-nowrap font-medium text-slate-900">Nov 24</td><td class="px-4 py-2.5">Studio: Immersive Display Facilities</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-amber-50 hover:bg-amber-100"><td class="px-4 py-2.5 border-l-4 border-amber-400 whitespace-nowrap font-medium text-slate-900">Nov 26</td><td class="px-4 py-2.5">THANKSGIVING BREAK &ndash; NO CLASS</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-emerald-50 hover:bg-emerald-100"><td class="px-4 py-2.5 border-l-4 border-emerald-400 whitespace-nowrap font-semibold text-slate-900">Dec 1</td><td class="px-4 py-2.5 font-semibold text-slate-900">Project Milestone III Presentation</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                    <tr class="bg-emerald-50 hover:bg-emerald-100"><td class="px-4 py-2.5 border-l-4 border-emerald-400 whitespace-nowrap font-semibold text-slate-900">Dec 3</td><td class="px-4 py-2.5 font-semibold text-slate-900">Project Exhibition</td><td class="px-4 py-2.5 text-slate-500"></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="mt-4 text-xs text-slate-500 leading-relaxed">
+                            *SL = VIRTUAL REALITY by Steve LaValle.; JL = Joseph LaViola et al., 3D User Interfaces: Theory and Practice, 2nd Edition (recommended reading); DS = Dieter Schmalstieg, Augmented Reality: Principles and Practice (recommended readings); VR = The VR Book: Human-Centered Design for Virtual Reality
+                        </p>
+                    </section>
+
+                    <!-- Studio Sessions -->
+                    <section id="studio" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Studio Sessions</h2>
+                        <p class="mb-4">Studio sessions provide hands-on opportunities to apply and further develop the concepts introduced during lectures. Sessions will typically include demonstrations, guided tutorials, implementation exercises, and practical work with XR hardware and software.</p>
+                        <p class="mb-4">Students are expected to bring the required equipment and follow the demonstrated tutorials during class. Some sessions will include required tasks or checkpoints that must be completed and presented or submitted for grading during the studio session. <strong class="text-slate-900">Completion of these in-class activities is required to receive full credit.</strong></p>
+                        <p>Students who anticipate equipment or software-access problems should contact the instructor in advance.</p>
+                    </section>
+
+                    <!-- Course Project -->
+                    <section id="project" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Course Project</h2>
+                        <p class="mb-6">The course project accounts for <strong class="text-slate-900">40% of the final grade</strong> and is assessed across the following deliverables:</p>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <div class="rounded-xl ring-1 ring-slate-200 overflow-hidden bg-slate-50">
+                                <div class="h-1 bg-emerald-300"></div>
+                                <div class="p-4">
+                                    <div class="flex items-baseline justify-between gap-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Oct 8</span>
+                                        <span class="text-lg font-bold text-slate-900">1%</span>
+                                    </div>
+                                    <p class="mt-1 font-semibold text-slate-900 text-sm">Project Proposal</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl ring-1 ring-slate-200 overflow-hidden bg-slate-50">
+                                <div class="h-1 bg-emerald-400"></div>
+                                <div class="p-4">
+                                    <div class="flex items-baseline justify-between gap-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Oct 29</span>
+                                        <span class="text-lg font-bold text-slate-900">10%</span>
+                                    </div>
+                                    <p class="mt-1 font-semibold text-slate-900 text-sm">Project Milestone I</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl ring-1 ring-slate-200 overflow-hidden bg-slate-50">
+                                <div class="h-1 bg-emerald-500"></div>
+                                <div class="p-4">
+                                    <div class="flex items-baseline justify-between gap-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Nov 19</span>
+                                        <span class="text-lg font-bold text-slate-900">10%</span>
+                                    </div>
+                                    <p class="mt-1 font-semibold text-slate-900 text-sm">Project Milestone II</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl ring-1 ring-slate-200 overflow-hidden bg-slate-50">
+                                <div class="h-1 bg-emerald-600"></div>
+                                <div class="p-4">
+                                    <div class="flex items-baseline justify-between gap-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Dec 1</span>
+                                        <span class="text-lg font-bold text-slate-900">10%</span>
+                                    </div>
+                                    <p class="mt-1 font-semibold text-slate-900 text-sm">Project Milestone III</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl ring-1 ring-slate-200 overflow-hidden bg-slate-50">
+                                <div class="h-1 bg-[#C00000]"></div>
+                                <div class="p-4">
+                                    <div class="flex items-baseline justify-between gap-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#C00000]">Dec 3</span>
+                                        <span class="text-lg font-bold text-slate-900">5%</span>
+                                    </div>
+                                    <p class="mt-1 font-semibold text-slate-900 text-sm">Project Exhibition</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl ring-1 ring-slate-200 overflow-hidden bg-slate-50">
+                                <div class="h-1 bg-slate-400"></div>
+                                <div class="p-4">
+                                    <div class="flex items-baseline justify-between gap-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">&mdash;</span>
+                                        <span class="text-lg font-bold text-slate-900">4%</span>
+                                    </div>
+                                    <p class="mt-1 font-semibold text-slate-900 text-sm">Project Documentation</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mt-5">Two <strong class="text-slate-900">Project Tutorial Sessions</strong> are scheduled during class time on Nov 10 and Nov 12 to support your project work.</p>
+                    </section>
+
+                    <!-- Hardware & Software -->
+                    <section id="requirements" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Hardware &amp; Software Requirements</h2>
+
+                        <h3 class="text-lg font-semibold text-slate-900 mb-4">Hardware</h3>
+                        <p class="mb-5">To enhance the learning experience and to successfully participate in the studio sessions, students will need access to the following hardware:</p>
+
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5 flex gap-4">
+                                <img src="imgs/laptop-icon.png" alt="Laptop" class="w-16 sm:w-20 h-16 sm:h-20 shrink-0 object-contain mix-blend-multiply">
+                                <div>
+                                    <h4 class="font-semibold text-slate-900">A GPU-enabled computer</h4>
+                                    <p class="mt-1.5 text-sm">A Windows or macOS laptop capable of running the required version of Unity, with a four-core 64-bit processor, 16 GB of RAM, approximately 15 GB of available storage, and a compatible NVIDIA, AMD, or Apple GPU.</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5 flex gap-4">
+                                <svg class="w-16 sm:w-20 h-16 sm:h-20 shrink-0 p-2.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24" role="img" aria-label="Smartphone">
+                                    <rect x="6" y="2" width="12" height="20" rx="2.5"/>
+                                    <circle cx="15" cy="6" r="1.6"/>
+                                    <path stroke-linecap="round" d="M10.5 19h3"/>
+                                </svg>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900">A smartphone</h4>
+                                    <p class="mt-1.5 text-sm">A programmable smartphone or tablet with cameras that meets the following minimum specifications: Android 11+ or iPhone 11 or newer, a 1080p or better display, a rear camera, ~5 GB of available storage, and that can be connected to your system using a USB-C or Lightning data cable.</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5 flex gap-4">
+                                <div class="w-16 sm:w-20 shrink-0 space-y-2">
+                                    <img src="imgs/cardboard.jpg" alt="Google Cardboard" class="w-full h-16 sm:h-20 object-contain rounded-lg mix-blend-multiply">
+                                    <img src="imgs/google-daydream.jpg" alt="Google Daydream" class="w-full h-16 sm:h-20 object-contain rounded-lg mix-blend-multiply">
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900">A headset</h4>
+                                    <p class="mt-1.5 text-sm">A basic headset that will hold your smartphone (or tablet), such as <a href="https://arvr.google.com/cardboard/" target="_blank" class="text-[#C00000] hover:underline">Google Cardboard</a> (available on <a href="https://www.amazon.com/google-cardboard/s?k=google+cardboard" target="_blank" class="text-[#C00000] hover:underline">Amazon</a> or other online stores), Google Daydream VR, or sturdier headsets with phone inserts. You may also bring your own stand-alone VR headset, such as the Meta Quest, Apple Vision Pro, or HTC VIVE. However, the tutorials in the studio sessions will focus on smartphone deployment, and support for application deployment on the specialized headsets may not be available.</p>
+                                </div>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5 flex gap-4">
+                                <img src="imgs/controller.jpg" alt="VR gamepad controller" class="w-16 sm:w-20 h-16 sm:h-20 shrink-0 object-contain rounded-lg mix-blend-multiply">
+                                <div>
+                                    <h4 class="font-semibold text-slate-900">A VR gamepad controller</h4>
+                                    <p class="mt-1.5 text-sm">Any Bluetooth controller that connects with your phone. Please ensure phone compatibility before purchasing. The controller should have at least one navigation control (arrows or joystick) and four action buttons.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-6"></div>
+
+                        <div class="rounded-xl bg-[#C00000]/5 ring-1 ring-[#C00000]/20 p-5">
+                            <p class="text-sm">Please note that UIC has short-term equipment lending options for laptops.</p>
+                            <p class="mt-2 text-sm italic">Please consult the course instructor as early in the course as possible if you are unable to purchase hardware equipment, so that a loaner or an alternative may be arranged.</p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold text-slate-900 mt-8 mb-4">Software</h3>
+                        <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-5 sm:p-6">
+                            <div class="flex flex-col sm:flex-row gap-5">
+                                <img src="imgs/unity.png" alt="Unity Logo" class="h-[44px] w-auto self-start object-contain">
+                                <div class="space-y-3 text-sm">
+                                    <p>The software environment for the studio sessions and the course project is Unity. Unity is a cross-platform game engine developed by Unity Technologies; as of today, it supports more than 19 platforms. Unity can be used to create both three-dimensional (3D) and two-dimensional (2D) games and virtual reality (VR) environments, as well as simulations or emulations for its many platforms, including hand-held, head-worn, stationary displays, and desktops. The basic version of Unity is free and sufficient for this course.</p>
+                                    <p>For augmented reality (AR), where the surrounding real world is overlaid with computer-generated imagery, Unity&rsquo;s AR Foundation will be used. It is a framework for AR application development in various mobile environments. It uses computer vision technology to recognize and track in real-time 3D simple objects and image targets, enabling the registration of the real world and virtual objects. AR Foundation enables the development of applications in both iOS and Android and is easily portable to both platforms.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Grading -->
+                    <section id="grading" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Grading</h2>
+
+                        <!-- Stacked weight bar -->
+                        <div class="flex h-3 rounded-full overflow-hidden ring-1 ring-slate-200 mb-5">
+                            <div class="bg-emerald-500" style="width:40%" title="Project 40%"></div>
+                            <div class="bg-sky-500"     style="width:30%" title="Studio Sessions 30%"></div>
+                            <div class="bg-[#C00000]"   style="width:25%" title="Exam 25%"></div>
+                            <div class="bg-amber-400"   style="width:5%"  title="Class Participation 5%"></div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span>
+                                    <span class="text-2xl font-bold text-slate-900">40%</span>
+                                </div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">Project</p>
+                                <ul class="mt-2 space-y-0.5 text-xs text-slate-500">
+                                    <li>Proposal: 1%</li>
+                                    <li>Milestones: 10% &times; 3</li>
+                                    <li>Exhibition: 5%</li>
+                                    <li>Documentation: 4%</li>
+                                </ul>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-sky-500"></span>
+                                    <span class="text-2xl font-bold text-slate-900">30%</span>
+                                </div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">Studio Sessions</p>
+                                <ul class="mt-2 space-y-0.5 text-xs text-slate-500">
+                                    <li>5 total studio sessions graded</li>
+                                    <li>Attendance: 2% &times; 5</li>
+                                    <li>Deliverables: 4% &times; 5</li>
+                                </ul>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-[#C00000]"></span>
+                                    <span class="text-2xl font-bold text-slate-900">25%</span>
+                                </div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">Exam</p>
+                                <ul class="mt-2 space-y-0.5 text-xs text-slate-500"><li>Nov 3</li></ul>
+                            </div>
+                            <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-4">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-amber-400"></span>
+                                    <span class="text-2xl font-bold text-slate-900">5%</span>
+                                </div>
+                                <p class="mt-1 font-semibold text-slate-900 text-sm">Class Participation</p>
+                            </div>
+                        </div>
+
+                        <!-- Letter scale -->
+                        <h3 class="text-lg font-semibold text-slate-900 mt-8 mb-3">Letter Grade Scale</h3>
+                        <div class="grid grid-cols-5 gap-2">
+                            <div class="text-center"><div class="rounded-lg py-2 font-bold text-white bg-emerald-500">A</div><div class="mt-1 text-[11px] text-slate-500">85-100%</div></div>
+                            <div class="text-center"><div class="rounded-lg py-2 font-bold text-white bg-lime-500">B</div><div class="mt-1 text-[11px] text-slate-500">75-84.9%</div></div>
+                            <div class="text-center"><div class="rounded-lg py-2 font-bold text-white bg-amber-500">C</div><div class="mt-1 text-[11px] text-slate-500">70-74.9%</div></div>
+                            <div class="text-center"><div class="rounded-lg py-2 font-bold text-white bg-orange-500">D</div><div class="mt-1 text-[11px] text-slate-500">60-69.9%</div></div>
+                            <div class="text-center"><div class="rounded-lg py-2 font-bold text-white bg-[#C00000]">F</div><div class="mt-1 text-[11px] text-slate-500">&le; 59.9%</div></div>
+                        </div>
+
+                        <div class="mt-6 space-y-3 text-sm">
+                            <p>Letter grades will be based on a straight scale using the thresholds above. However, strong attendance and participation may be taken into account in borderline situations, allowing a slightly lower percentage (e.g., 74.75%) to be rounded up.</p>
+                            <p>You can use this straight grading scale as an indicator of your minimum grade in the course at any time during the course. You should keep track of your own points so that at any time during the semester you may calculate your minimum grade based on the total number of points possible at that particular time. If and when, for any reason, you have concerns about your grade in the course, please see me during my office hours so that we can discuss study techniques or alternative strategies to help you.</p>
+                            <p>You have two weeks after each grade is released to raise any concerns or questions regarding their marks. Beyond this two-week window, no further inquiries or revisions to the grade will be considered.</p>
+                        </div>
+                    </section>
+
+                    <!-- Policies -->
+                    <section id="policies" class="card bg-white p-6 sm:p-8 rounded-2xl ring-1 ring-slate-200 shadow-sm">
+                        <h2 class="accent text-2xl font-bold text-slate-900 mb-5">Course Policies</h2>
+                        <p class="mb-6">The student is responsible for all the material mentioned in class (either by the instructor or during discussions) and all the assigned readings announced in class and/or listed online. Therefore, students are expected to attend every class. If you miss one class, please talk to those who attended to catch up with the course material. Note that additions or changes may be announced from time to time in class. All the course material will be on the course website and on Canvas, as will be announced from time to time. Class announcements will be communicated via email and found on the course webpage.</p>
+
+                        <div class="space-y-6 text-sm">
+                            <div>
+                                <h3 class="text-base font-semibold text-[#C00000] mb-2">Academic Integrity</h3>
+                                <div class="space-y-2.5">
+                                    <p>UIC is an academic community committed to providing an environment in which research, learning, and scholarship can flourish and in which all endeavors are guided by academic and professional integrity. In this community, all members, including faculty, administrators, staff, and students alike, share the responsibility to uphold the highest standards of academic honesty and quality of academic work so that such a collegial and productive environment exists.</p>
+                                    <p>As a student and member of the UIC community, you are expected to adhere to the <a href="https://dos.uic.edu/community-standards/" class="text-[#C00000] hover:underline">Community Standards</a> of integrity, accountability, and respect in all of your academic endeavors. When <a href="https://dos.uic.edu/community-standards/academic-integrity/" class="text-[#C00000] hover:underline">accusations of academic dishonesty</a> occur, the Office of the Dean of Students investigates and adjudicates suspected violations of this student code. Unacceptable behavior includes cheating, unauthorized collaboration, fabrication or falsification, plagiarism, multiple submissions without instructor permission, using unauthorized study aids, coercion regarding grading or evaluation of coursework, and facilitating academic misconduct. Please review the <a href="https://dos.uic.edu/wp-content/uploads/sites/262/2018/10/DOS-Student-Disciplinary-Policy-2018-2019-FINAL.pdf" class="text-[#C00000] hover:underline">UIC Student Disciplinary Policy</a> for additional information about the process by which instances of academic misconduct are handled towards the goal of developing responsible student behavior.</p>
+                                    <p>By submitting your artifacts for grading, you acknowledge these terms, you declare that your work is solely your own, and you promise that, unless authorized by the instructor or proctor, you have not communicated with anyone in any way during an exam or other online assessment. Let's embrace what it means to be a UIC community member and together be committed to the values of integrity.</p>
+                                    <p>Our class will follow the <a href="https://www.cs.uic.edu/~grad/CS_Code_of_Conduct.pdf" class="text-[#C00000] hover:underline">CS Code of Conduct</a>. If you are not adhering to our course norms, a case of behavior misconduct will be submitted to the Dean of Students and to the Director of Undergraduate Studies in the department of Computer Science. If you are not adhering to our course norms, you will not get full credit for your work in this class. For extreme cases of violating the course norms, credit for the course will not be given.</p>
+                                    <p>All the work you submit must be your own; you should not use paraphrasing software (like QuillBot), or AI software for writing (like ChatGPT), or any AI tool for code generation to solve assignments &ndash; unless explicitly allowed to do so. If in doubt about a specific tool, ask.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-base font-semibold text-[#C00000] mb-2">Inclusive Learning Environment</h3>
+                                <p>UIC values diversity and inclusion. Regardless of age, disability, ethnicity, race, gender, gender identity, sexual orientation, socioeconomic status, geographic background, religion, political ideology, language, or culture, we expect all members of this class to contribute to a respectful, welcoming, and inclusive environment for every other member of our class. If there are aspects of the instruction or design of this course that result in barriers to your inclusion, engagement, accurate assessment or achievement, please notify me as soon as possible.</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-base font-semibold text-[#C00000] mb-2">Disability Accommodation</h3>
+                                <p>UIC is committed to full inclusion and participation of people with disabilities in all aspects of university life. If you face or anticipate disability-related barriers while at UIC, please connect with the <a href="https://drc.uic.edu/" class="text-[#C00000] hover:underline">Disability Resource Center (DRC)</a>, via email at drc@uic.edu, or call (312) 413-2183 to create a plan for reasonable accommodations. In order to receive accommodations, you will need to disclose the disability to the DRC, complete an interactive registration process with the DRC, and provide me with a Letter of Accommodation (LOA). Upon receipt of a LOA, I will gladly work with you and the DRC to implement approved accommodations.</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-base font-semibold text-[#C00000] mb-2">Religious Holidays</h3>
+                                <p>I will make every effort to avoid scheduling exams or requiring student projects be submitted on religious holidays. If you wish to observe your religious holidays, please notify me by the tenth day of the semester of the date when you will be absent unless the religious holiday is observed on or before the tenth day of the semester. In such cases, please notify me at least five days in advance of the date when you will be absent. I will make every reasonable effort to honor your request and not penalize you for missing the class. If an examination or project is due during your absence, you will be given an exam or assignment equivalent to the one completed by those students in attendance. Students may appeal through campus grievance procedures for religious accommodations.</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-base font-semibold text-[#C00000] mb-2">Mental and Emotional Wellness</h3>
+                                <p>Counseling Services are available for all UIC students. You may seek free and confidential services from the Counseling Center at <a href="https://counseling.uic.edu/" class="text-[#C00000] hover:underline">counseling.uic.edu</a>. The Counseling Center is located in the Student Services Building; you may contact them at (312) 996-3490 during normal business hours (M-F, 9 am -5 pm). If calling after hours, press 2 to be connected to a crisis counselor. In addition to offering counseling services, the Counseling Center also operates the InTouch Crisis Hotline from 6:00 p.m.-10:30 p.m. They offer support and referrals to callers, as well as telephone crisis interventions; please call (312) 996-5535.</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-base font-semibold text-[#C00000] mb-2">Campus Advocacy Network</h3>
+                                <p>The Campus Advocacy Network provides information and offers resources to all UIC students, faculty, and staff. Under the Title IX law you have the right to an education that is free from any form of gender-based violence and discrimination. Crimes of sexual assault, domestic violence, sexual harassment, and stalking are against the law and can be prevented. For more information or for confidential victim-services and advocacy, contact UIC's Campus Advocacy Network at 312-413-1025 or visit <a href="http://can.uic.edu/" class="text-[#C00000] hover:underline">can.uic.edu</a>. To make a report to UIC's Title IX office, email TitleIX@uic.edu or call (312) 996-5657.</p>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+                <!-- Footer -->
+                <footer class="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <p class="text-sm text-slate-400">&copy; 2026 Saeed Boorboor | University of Illinois Chicago &mdash; Department of Computer Science</p>
+                    <a href="cs428-fall2025.html" class="text-sm text-slate-400 hover:text-[#C00000] transition">Fall 2025 &rarr;</a>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Highlight the sidebar link for the section currently in view.
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var sections = links
+    .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+    .filter(Boolean);
+  if (!sections.length) return;
+
+  var current = null;
+  function update() {
+    var pos = window.scrollY + 140;           // a little below the viewport top
+    var active = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= pos) active = sections[i];
+    }
+    // At the very bottom, the last section is the one being read.
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+      active = sections[sections.length - 1];
+    }
+    if (active === current) return;
+    current = active;
+    links.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + active.id);
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>
