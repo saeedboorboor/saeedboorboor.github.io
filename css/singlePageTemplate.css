@@ -1,5 +1,7 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+/* Source Sans 3 is loaded with <link> in each page head so it fetches in
+   parallel instead of through a render-blocking @import chain.
+   Keep the head links in sync if these weights ever change. */
 
 /* ===================================================================
    DESIGN TOKENS
@@ -49,8 +51,20 @@ body {
 	line-height: 1.6;
 	height: 100%;
 	overflow: hidden;
+
+	/* Render the same face in every engine.
+	   antialiased + grayscale: without the -moz- pair, Firefox and Safari on
+	   macOS paint the text noticeably heavier than Chrome does.
+	   font-synthesis: none - never let a browser fake a bold or an italic;
+	   each engine fakes them differently, so only real loaded weights are used.
+	   kerning/ligatures are set explicitly because text-rendering:
+	   optimizeLegibility (removed here) means different things in Blink,
+	   Gecko and WebKit. */
 	-webkit-font-smoothing: antialiased;
-	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	font-kerning: normal;
+	font-variant-ligatures: common-ligatures;
 }
 
 p { margin: 0 0 1em; color: var(--ink-soft); }
@@ -89,6 +103,7 @@ img { max-width: 100%; }
 	flex-direction: column;
 	height: 100vh;
 	box-sizing: border-box;
+	overflow-y: auto;
 }
 
 /* Headshot — first image inside the sidebar */
@@ -108,6 +123,7 @@ img { max-width: 100%; }
 }
 
 /* Social / academic icon row */
+.sidenav-icons { margin-top: 18px; display: flex; justify-content: center; }
 .sidenav .ai {
 	color: var(--muted) !important;
 	transition: color .18s ease, transform .18s ease;
@@ -135,10 +151,13 @@ img { max-width: 100%; }
 	letter-spacing: .2px;
 }
 
+/* Sidebar separator sits tighter than the full-width rules in the main column */
+.sidenav hr { margin: 16px 0; }
+
 /* Primary navigation */
 .sidenav-nav {
 	text-align: left;
-	padding-top: 22px;
+	padding-top: 16px;
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
@@ -155,7 +174,7 @@ img { max-width: 100%; }
 }
 .nav-item a {
 	display: block;
-	padding: 7px 12px;
+	padding: 4px 12px;
 	border-radius: var(--radius-sm);
 	font-size: 16px;
 	font-weight: 500;
@@ -179,7 +198,7 @@ img { max-width: 100%; }
 }
 .sidenav-nav > .nav-current {
 	display: block;
-	padding: 7px 12px;
+	padding: 4px 12px;
 	border-radius: var(--radius-sm);
 	font-size: 16px;
 }
@@ -208,6 +227,7 @@ img { max-width: 100%; }
 
 .sidenav-news {
 	text-align: left;
+	min-height: 150px;
 	margin-top: 4px;
 	padding: 6px 4px 20px 0;
 	flex: 1;
@@ -816,6 +836,35 @@ ul.news-list li { margin-bottom: 10px; font-size: 1rem; }
 /* ===================================================================
    RESPONSIVE
    =================================================================== */
+/* Short windows: shrink the fixed sidebar header so the news feed keeps
+   a usable share of the column instead of collapsing to a sliver. */
+@media (min-width: 769px) and (max-height: 900px) {
+	.sidenav { padding-top: 24px; }
+	.sidenav > div:first-child img { width: 132px; height: 132px; }
+	.sidenav-icons { margin-top: 12px; }
+	.sidenav-affil { padding-top: 12px; }
+	.sidenav-nav { padding-top: 10px; }
+	.sidenav hr { margin: 12px 0; }
+}
+
+@media (min-width: 769px) and (max-height: 760px) {
+	.sidenav > div:first-child img { width: 104px; height: 104px; border-width: 3px; }
+	.sidenav .ai-2x { font-size: 1.5em; }
+	.sidenav-affil { padding-top: 10px; font-size: 14px; line-height: 1.4; }
+	.sidenav-affil .role { font-size: 14px; }
+	.sidenav-affil .email { margin-top: 3px; font-size: 13px; }
+	.nav-item a,
+	.sidenav-nav > .nav-current { padding: 3px 12px; font-size: 15px; }
+	.sidenav hr { margin: 9px 0; }
+}
+
+@media (min-width: 769px) and (max-height: 640px) {
+	.sidenav { padding-top: 18px; padding-bottom: 14px; }
+	.sidenav > div:first-child img { width: 84px; height: 84px; }
+	.sidenav-icons { margin-top: 8px; }
+	.sidenav-nav { padding-top: 6px; }
+}
+
 /* Collapse the two-column galleries on narrower viewports */
 @media (max-width: 1024px) {
 	.highlight-list { grid-template-columns: 1fr; }
