@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fitts' Law Lab — CS 428</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --ink:#1c2130; --muted:#5f6778; --line:#dfe3ea;
+    --accent:#2563eb; --accent2:#0ea5a4; --warn:#d97706; --bad:#dc2626; --good:#16a34a;
+    --home:#64748b; --target:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+  body{display:grid;grid-template-columns:330px 1fr;grid-template-rows:auto 1fr;height:100vh}
+  header{grid-column:1/3;display:flex;align-items:center;gap:16px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+  header h1{font-size:17px;margin:0;font-weight:650}
+  header .sub{color:var(--muted);font-size:13px}
+  header .spacer{flex:1}
+  aside{overflow:auto;background:var(--panel);border-right:1px solid var(--line);padding:12px 14px;font-size:13px}
+  main{position:relative;overflow:hidden;display:grid;grid-template-rows:1fr auto}
+  #stage{position:relative;background:#fff;margin:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:crosshair}
+  canvas#c{display:block;width:100%;height:100%}
+  #hud{position:absolute;top:10px;left:12px;right:215px;flex-wrap:wrap;display:flex;gap:10px;align-items:flex-start;pointer-events:none}
+  .chip{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .chip b{font-weight:650}
+  #msg{font-size:15px;font-weight:600}
+  #stopwatch{position:absolute;right:12px;top:10px;background:#111827;color:#f9fafb;border-radius:10px;padding:8px 14px;font-variant-numeric:tabular-nums;text-align:center;pointer-events:auto;min-width:180px}
+  #stopwatch .t{font-size:34px;font-weight:700;letter-spacing:.5px;line-height:1.1}
+  #stopwatch .k{font-size:11px;color:#9ca3af}
+  #stopwatch.running .t{color:#4ade80}
+  fieldset{border:1px solid var(--line);border-radius:8px;margin:0 0 12px;padding:8px 10px}
+  legend{font-weight:650;font-size:12px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;padding:0 4px}
+  label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
+  label span.l{flex:1}
+  input[type=number],select{width:104px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;font-size:13px;background:#fff}
+  input[type=range]{width:100%}
+  .row{display:flex;gap:6px;flex-wrap:wrap}
+  button{padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:13px;cursor:pointer}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button.small{padding:4px 8px;font-size:12px}
+  button:disabled{opacity:.5;cursor:default}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-variant-numeric:tabular-nums}
+  .kv .v{font-weight:650;text-align:right}
+  .formula{font-family:"Cambria Math",Georgia,serif;font-size:15px;text-align:center;padding:6px;background:#f8fafc;border-radius:6px;border:1px dashed var(--line)}
+  .hint{color:var(--muted);font-size:12px;margin:4px 0}
+  #bottom{margin:0 12px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:38vh;display:grid;grid-template-columns:1fr 300px;overflow:hidden}
+  #logwrap{overflow:auto;padding:8px 10px}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+  th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right;white-space:nowrap}
+  th{position:sticky;top:0;background:#f8fafc;text-align:right;font-weight:650}
+  td:first-child,th:first-child{text-align:left}
+  td input{width:64px;padding:2px 4px;border:1px solid var(--line);border-radius:4px;text-align:right}
+  tr.miss td{color:var(--bad)}
+  .hidden{display:none!important}
+  #chartwrap{border-left:1px solid var(--line);padding:8px;display:flex;flex-direction:column}
+  #chart{width:100%;height:100%;min-height:150px}
+  .fitbox{font-size:12.5px;line-height:1.5}
+  .tag{display:inline-block;padding:1px 6px;border-radius:99px;font-size:11px;background:#eef2ff;color:#3730a3;margin-left:4px}
+  .ok{color:var(--good)} .bad{color:var(--bad)}
+  @media (max-width:900px){body{grid-template-columns:1fr;grid-template-rows:auto auto 1fr}aside{max-height:40vh;border-right:0;border-bottom:1px solid var(--line)}#bottom{grid-template-columns:1fr}#chartwrap{border-left:0;border-top:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Fitts' Law Lab</h1>
+  <span class="sub">CS 428 · Lecture 5.2 · Why selection is hard</span>
+  <span class="spacer"></span>
+  <span class="sub">Click <b>Start</b> (grey) → move to the <b>target</b> (red) and click. <kbd>Space</kbd> toggles the stopwatch.</span>
+</header>
+
+<aside>
+  <fieldset>
+    <legend>1 · Target</legend>
+    <label><span class="l">Width <b>W</b> (px)</span><input id="w" type="number" min="4" max="400" step="1" value="60"></label>
+    <input id="wr" type="range" min="4" max="300" step="1" value="60">
+    <label><span class="l">Distance <b>D</b> (px)</span><input id="d" type="number" min="10" max="2000" step="1" value="400"></label>
+    <input id="dr" type="range" min="10" max="1200" step="1" value="400">
+    <label><span class="l">Shape</span>
+      <select id="shape">
+        <option value="circle">Circle (diameter = W)</option>
+        <option value="square">Square (side = W)</option>
+        <option value="barAcross">Bar across path (W along path, tall)</option>
+        <option value="barAlong">Bar along path (W along path, thin)</option>
+      </select></label>
+    <label><span class="l">Approach direction</span>
+      <select id="dir">
+        <option value="0">→ right</option>
+        <option value="180">← left</option>
+        <option value="90">↓ down</option>
+        <option value="270">↑ up</option>
+        <option value="rand">random angle</option>
+      </select></label>
+    <label><span class="l">Show D and W on stage</span><input id="showDW" type="checkbox"></label>
+    <label><span class="l">Ruler tool (drag on stage)</span><input id="ruler" type="checkbox"></label>
+    <p class="hint">Try measuring D and W yourself with the ruler before revealing them. W is the target's extent <em>along the direction of movement</em>.</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>2 · Fitts' law model</legend>
+    <div class="formula">MT = a + b · log<sub>2</sub>(D / W + 1)</div>
+    <label><span class="l">a (s)</span><input id="a" type="number" step="0.01" value="0.40"></label>
+    <label><span class="l">b (s/bit)</span><input id="b" type="number" step="0.01" value="0.20"></label>
+    <p class="hint">Pre-filled with the constants from the lecture example. Fit your own a and b from your trials in section 4.</p>
+    <div class="kv">
+      <span>Index of difficulty ID</span><span class="v" id="idv">—</span>
+      <span>Predicted MT</span><span class="v" id="mtp">—</span>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>3 · Timing</legend>
+    <label><span class="l">Show auto-timed MT in log</span><input id="showAuto" type="checkbox"></label>
+    <p class="hint">Time each trial by hand first (stopwatch or a partner with a phone) and type it into the <b>Manual MT</b> column. Reveal the auto-timed MT afterwards to compare.</p>
+    <div class="row">
+      <button id="useSW" class="small">Copy stopwatch → last trial</button>
+      <button id="resetSW" class="small">Reset stopwatch</button>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>4 · Batch run (for fitting a, b)</legend>
+    <label><span class="l">Widths (px, comma-sep)</span><input id="bw" type="text" value="20, 40, 80" style="width:104px;padding:4px 6px;border:1px solid var(--line);border-radius:6px"></label>
+    <label><span class="l">Distances (px)</span><input id="bd" type="text" value="150, 400, 800" style="width:104px;padding:4px 6px;border:1px solid var(--line);border-radius:6px"></label>
+    <label><span class="l">Trials per condition</span><input id="bn" type="number" min="1" max="20" value="3"></label>
+    <div class="row">
+      <button id="batch" class="primary">Run batch (random order)</button>
+      <button id="stopBatch" class="small" disabled>Stop</button>
+    </div>
+    <p class="hint" id="batchStatus"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>5 · Data</legend>
+    <div class="row">
+      <button id="fit" class="primary">Fit a, b from log</button>
+      <select id="fitSrc"><option value="auto">use auto MT</option><option value="manual">use manual MT</option></select>
+    </div>
+    <div class="row" style="margin-top:6px">
+      <button id="csv" class="small">Download CSV</button>
+      <button id="clear" class="small">Clear log</button>
+    </div>
+    <label style="margin-top:8px"><span class="l">Participant / initials</span><input id="pid" type="text" value="" placeholder="e.g. SB" style="width:104px;padding:4px 6px;border:1px solid var(--line);border-radius:6px"></label>
+  </fieldset>
+</aside>
+
+<main>
+  <div id="stage">
+    <canvas id="c"></canvas>
+    <div id="hud">
+      <div class="chip" id="msg">Click the grey Start circle to begin a trial.</div>
+      <div class="chip" id="dw" style="display:none"></div>
+    </div>
+    <div id="stopwatch"><div class="t" id="swt">0.000</div><div class="k">STOPWATCH · Space = start/stop</div></div>
+  </div>
+  <div id="bottom">
+    <div id="logwrap">
+      <table id="log">
+        <thead><tr>
+          <th>#</th><th>Shape</th><th>Dir°</th><th>D px</th><th>W px</th><th>ID bits</th><th>Pred. MT s</th><th>Manual MT s</th><th class="autocol">Auto MT s</th><th>Hit?</th><th>Path/D</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="chartwrap">
+      <canvas id="chart"></canvas>
+      <div class="fitbox" id="fitbox">Fit: — (log ≥ 3 hit trials, then press <b>Fit a, b</b>)</div>
+    </div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const stage = $('stage'), cv = $('c'), ctx = cv.getContext('2d');
+  const state = {
+    phase: 'idle',           // idle | armed (target shown, timing)
+    home: null, target: null, dirDeg: 0,
+    t0: 0, path: 0, lastPt: null,
+    trials: [],
+    batch: null,
+    rulerA: null, rulerB: null, dragging: false,
+    sw: {running:false, start:0, acc:0}
+  };
+  const HOME_R = 22;
+
+  // ---------- geometry ----------
+  function resize(){
+    const r = stage.getBoundingClientRect();
+    cv.width = Math.round(r.width * devicePixelRatio); cv.height = Math.round(r.height * devicePixelRatio);
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    layout(); draw();
+  }
+  function params(){
+    return { W: +$('w').value, D: +$('d').value, shape: $('shape').value, dir: $('dir').value };
+  }
+  function shapeDims(shape, W){
+    // extent along the path (this IS W) and across the path
+    switch(shape){
+      case 'circle': return {along:W, across:W};
+      case 'square': return {along:W, across:W};
+      case 'barAcross': return {along:W, across:Math.max(4*W, 140)};
+      case 'barAlong': return {along:W, across:Math.max(W/4, 10)};
+    }
+  }
+  function layout(){
+    const {W, D, shape} = params();
+    const r = stage.getBoundingClientRect();
+    const cx = r.width/2, cy = r.height/2;
+    let deg = $('dir').value === 'rand' ? state.dirDeg : +$('dir').value;
+    const th = deg * Math.PI/180, ux = Math.cos(th), uy = Math.sin(th);
+    // fit D on stage: clamp so that home and target stay inside with margin
+    const margin = Math.max(HOME_R, shapeDims(shape,W).across/2, W/2) + 16;
+    const maxD = Math.min(
+      Math.abs(ux) > 1e-6 ? (r.width - 2*margin) / Math.abs(ux) : 1e9,
+      Math.abs(uy) > 1e-6 ? (r.height - 2*margin)/ Math.abs(uy) : 1e9);
+    const Deff = Math.min(D, maxD);
+    if (Deff < D) $('msg').textContent = `Stage too small for D=${D}px; using D=${Math.round(Deff)}px. Enlarge the window or reduce D.`;
+    state.home = {x: cx - ux*Deff/2, y: cy - uy*Deff/2};
+    state.target = {x: cx + ux*Deff/2, y: cy + uy*Deff/2, ux, uy, deg, D: Deff, W, shape, dims: shapeDims(shape, W)};
+    updateModel();
+  }
+  function inTarget(p){
+    const t = state.target;
+    const dx = p.x - t.x, dy = p.y - t.y;
+    if (t.shape === 'circle') return Math.hypot(dx,dy) <= t.W/2;
+    const along = dx*t.ux + dy*t.uy, across = -dx*t.uy + dy*t.ux;
+    return Math.abs(along) <= t.dims.along/2 && Math.abs(across) <= t.dims.across/2;
+  }
+  function inHome(p){ return Math.hypot(p.x-state.home.x, p.y-state.home.y) <= HOME_R; }
+
+  // ---------- model ----------
+  const ID = (D,W) => Math.log2(D/W + 1);
+  function updateModel(){
+    const t = state.target; if(!t) return;
+    const id = ID(t.D, t.W), a = +$('a').value, b = +$('b').value;
+    $('idv').textContent = id.toFixed(2) + ' bits';
+    $('mtp').textContent = (a + b*id).toFixed(3) + ' s';
+    const dw = $('dw');
+    if ($('showDW').checked){ dw.style.display=''; dw.innerHTML = `<b>D</b> = ${t.D.toFixed(0)} px &nbsp; <b>W</b> = ${t.W} px (along path) &nbsp; <b>ID</b> = ${id.toFixed(2)} bits`; }
+    else dw.style.display='none';
+  }
+
+  // ---------- drawing ----------
+  function draw(){
+    const r = stage.getBoundingClientRect();
+    ctx.clearRect(0,0,r.width,r.height);
+    // subtle grid
+    ctx.strokeStyle = '#f1f3f7'; ctx.lineWidth = 1;
+    for(let x=0;x<r.width;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,r.height);ctx.stroke();}
+    for(let y=0;y<r.height;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(r.width,y);ctx.stroke();}
+    const h = state.home, t = state.target;
+    // home
+    ctx.beginPath(); ctx.arc(h.x,h.y,HOME_R,0,Math.PI*2);
+    ctx.fillStyle = state.phase==='idle' ? '#64748b' : '#cbd5e1'; ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='600 12px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(state.phase==='idle'?'Start':'', h.x, h.y);
+    // target
+    if (state.phase === 'armed' || $('showDW').checked){
+      ctx.save(); ctx.translate(t.x,t.y); ctx.rotate(t.deg*Math.PI/180);
+      ctx.fillStyle = state.phase==='armed' ? '#ef4444' : 'rgba(239,68,68,.35)';
+      if (t.shape==='circle'){ ctx.beginPath(); ctx.arc(0,0,t.W/2,0,Math.PI*2); ctx.fill(); }
+      else { ctx.fillRect(-t.dims.along/2, -t.dims.across/2, t.dims.along, t.dims.across); }
+      ctx.restore();
+    }
+    if ($('showDW').checked){
+      ctx.strokeStyle='#2563eb'; ctx.setLineDash([6,4]); ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(h.x,h.y); ctx.lineTo(t.x,t.y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#2563eb'; ctx.font='600 13px system-ui';
+      ctx.fillText(`D = ${t.D.toFixed(0)} px`, (h.x+t.x)/2 - t.uy*18, (h.y+t.y)/2 + t.ux*18);
+      // W bracket along path
+      const a1 = {x:t.x - t.ux*t.W/2, y:t.y - t.uy*t.W/2}, a2 = {x:t.x + t.ux*t.W/2, y:t.y + t.uy*t.W/2};
+      const off = t.dims.across/2 + 14;
+      ctx.beginPath(); ctx.moveTo(a1.x - t.uy*off, a1.y + t.ux*off); ctx.lineTo(a2.x - t.uy*off, a2.y + t.ux*off); ctx.stroke();
+      ctx.fillText(`W = ${t.W} px`, t.x - t.uy*(off+14), t.y + t.ux*(off+14));
+    }
+    // ruler
+    if ($('ruler').checked && state.rulerA && state.rulerB){
+      const A=state.rulerA,B=state.rulerB;
+      ctx.strokeStyle='#0ea5a4'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.stroke();
+      ctx.beginPath(); ctx.arc(A.x,A.y,3,0,7); ctx.arc(B.x,B.y,3,0,7); ctx.fillStyle='#0ea5a4'; ctx.fill();
+      const L = Math.hypot(B.x-A.x,B.y-A.y);
+      ctx.font='600 13px system-ui'; ctx.fillText(`${L.toFixed(0)} px`, (A.x+B.x)/2, (A.y+B.y)/2 - 12);
+    }
+  }
+
+  // ---------- trial flow ----------
+  function pt(e){ const r = stage.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; }
+  function arm(){
+    if ($('dir').value==='rand'){ state.dirDeg = Math.random()*360; layout(); }
+    state.phase='armed'; state.t0 = performance.now(); state.path = 0; state.lastPt = {...state.home};
+    $('msg').textContent = 'Go! Click the red target.'; draw();
+  }
+  function finish(p){
+    const mt = (performance.now()-state.t0)/1000, hit = inTarget(p), t = state.target;
+    const id = ID(t.D,t.W), a=+$('a').value, b=+$('b').value;
+    const rec = { n: state.trials.length+1, shape:t.shape, dir:Math.round(t.deg), D:Math.round(t.D), W:t.W, ID:+id.toFixed(3),
+      pred:+(a+b*id).toFixed(3), manual:'', auto:+mt.toFixed(3), hit, pathRatio:+(state.path/t.D).toFixed(2), a_used:a, b_used:b,
+      batch: state.batch ? 'batch' : 'manual', ts: new Date().toISOString() };
+    state.trials.push(rec); addRow(rec);
+    state.phase='idle';
+    $('msg').innerHTML = hit ? `<span class="ok">Hit</span> — trial ${rec.n} logged. Click Start for the next one.` : `<span class="bad">Miss</span> — trial ${rec.n} logged as an error. Click Start to try again.`;
+    draw(); drawChart();
+    if (state.batch) nextBatch();
+  }
+  stage.addEventListener('pointerdown', e => {
+    const p = pt(e);
+    if ($('ruler').checked){ state.rulerA=p; state.rulerB=p; state.dragging=true; draw(); return; }
+    if (state.phase==='idle'){ if (inHome(p)) arm(); }
+    else finish(p);
+  });
+  stage.addEventListener('pointermove', e => {
+    const p = pt(e);
+    if (state.dragging){ state.rulerB=p; draw(); return; }
+    if (state.phase==='armed' && state.lastPt){ state.path += Math.hypot(p.x-state.lastPt.x, p.y-state.lastPt.y); state.lastPt=p; }
+  });
+  window.addEventListener('pointerup', () => { state.dragging=false; });
+
+  // ---------- batch ----------
+  function parseList(s){ return s.split(',').map(x=>+x.trim()).filter(x=>x>0); }
+  function startBatch(){
+    const Ws = parseList($('bw').value), Ds = parseList($('bd').value), n = +$('bn').value;
+    const conds = []; Ws.forEach(W=>Ds.forEach(D=>{ for(let i=0;i<n;i++) conds.push({W,D}); }));
+    for (let i=conds.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [conds[i],conds[j]]=[conds[j],conds[i]]; }
+    state.batch = {conds, i:0}; $('batch').disabled=true; $('stopBatch').disabled=false;
+    nextBatch();
+  }
+  function nextBatch(){
+    const bt = state.batch; if(!bt) return;
+    if (bt.i >= bt.conds.length){ endBatch('Batch complete — now press "Fit a, b from log".'); return; }
+    const c = bt.conds[bt.i++]; $('w').value=$('wr').value=c.W; $('d').value=$('dr').value=c.D;
+    $('batchStatus').textContent = `Batch trial ${bt.i} / ${bt.conds.length}: W=${c.W}, D=${c.D}`;
+    layout(); draw();
+  }
+  function endBatch(msg){ state.batch=null; $('batch').disabled=false; $('stopBatch').disabled=true; $('batchStatus').textContent = msg||''; }
+  $('batch').onclick = startBatch; $('stopBatch').onclick = () => endBatch('Batch stopped.');
+
+  // ---------- log table ----------
+  function addRow(rec){
+    const tb = $('log').querySelector('tbody'); const tr = document.createElement('tr'); if(!rec.hit) tr.className='miss';
+    tr.innerHTML = `<td>${rec.n}</td><td>${rec.shape}</td><td>${rec.dir}</td><td>${rec.D}</td><td>${rec.W}</td><td>${rec.ID.toFixed(2)}</td><td>${rec.pred.toFixed(3)}</td>
+      <td><input type="number" step="0.001" placeholder="type" data-n="${rec.n}"></td><td class="autocol">${rec.auto.toFixed(3)}</td><td>${rec.hit?'✔':'✘'}</td><td>${rec.pathRatio.toFixed(2)}</td>`;
+    tr.querySelector('input').addEventListener('input', e => { rec.manual = e.target.value===''?'':+e.target.value; });
+    tb.appendChild(tr); $('logwrap').scrollTop = 1e9; toggleAuto();
+  }
+  function toggleAuto(){ document.querySelectorAll('.autocol').forEach(el => el.classList.toggle('hidden', !$('showAuto').checked)); }
+  $('showAuto').onchange = toggleAuto; toggleAuto();
+  $('clear').onclick = () => { if(confirm('Clear all logged trials?')){ state.trials=[]; $('log').querySelector('tbody').innerHTML=''; drawChart(); $('fitbox').innerHTML='Fit: —'; } };
+
+  // ---------- stopwatch ----------
+  function swNow(){ const s=state.sw; return (s.acc + (s.running ? performance.now()-s.start : 0))/1000; }
+  function swToggle(){ const s=state.sw; if(s.running){ s.acc += performance.now()-s.start; s.running=false; } else { s.start=performance.now(); s.running=true; } $('stopwatch').classList.toggle('running', s.running); }
+  function swReset(){ state.sw={running:false,start:0,acc:0}; $('stopwatch').classList.remove('running'); }
+  $('stopwatch').onclick = swToggle; $('resetSW').onclick = swReset;
+  $('useSW').onclick = () => { const last = state.trials[state.trials.length-1]; if(!last) return; last.manual = +swNow().toFixed(3);
+    const inp = $('log').querySelector(`input[data-n="${last.n}"]`); if(inp) inp.value = last.manual; };
+  window.addEventListener('keydown', e => { if (e.code==='Space' && e.target.tagName!=='INPUT'){ e.preventDefault(); swToggle(); } });
+  (function tick(){ $('swt').textContent = swNow().toFixed(3); requestAnimationFrame(tick); })();
+
+  // ---------- fit & chart ----------
+  function fitData(){
+    const src = $('fitSrc').value;
+    return state.trials.filter(t => t.hit && (src==='auto' ? true : t.manual!=='' && t.manual>0)).map(t => ({x:t.ID, y: src==='auto'? t.auto : +t.manual}));
+  }
+  function regress(pts){
+    const n=pts.length; if(n<2) return null;
+    const mx=pts.reduce((s,p)=>s+p.x,0)/n, my=pts.reduce((s,p)=>s+p.y,0)/n;
+    let sxy=0,sxx=0,syy=0; pts.forEach(p=>{sxy+=(p.x-mx)*(p.y-my); sxx+=(p.x-mx)**2; syy+=(p.y-my)**2;});
+    if (sxx===0) return null;
+    const b=sxy/sxx, a=my-b*mx, r2 = syy===0?1:(sxy*sxy)/(sxx*syy);
+    const tp = pts.reduce((s,p)=>s+p.x/p.y,0)/n;
+    return {a,b,r2,n,tp};
+  }
+  let lastFit=null;
+  $('fit').onclick = () => {
+    const pts = fitData(); const f = regress(pts);
+    if(!f || f.n<3){ $('fitbox').innerHTML = pts.length<3 ? `Fit: need at least 3 hit trials with ${$('fitSrc').value} MT.` : 'Fit: all trials have the same ID — vary D or W (or run a batch) so a slope can be fitted.'; return; }
+    lastFit=f;
+    const errs = state.trials.length ? (100*state.trials.filter(t=>!t.hit).length/state.trials.length).toFixed(0) : 0;
+    $('fitbox').innerHTML = `<b>Your fit</b> (${f.n} trials, ${$('fitSrc').value} MT): a = <b>${f.a.toFixed(3)} s</b>, b = <b>${f.b.toFixed(3)} s/bit</b>, R² = ${f.r2.toFixed(2)}<br>
+      Mean throughput ID/MT = <b>${f.tp.toFixed(2)} bits/s</b> · error rate ${errs}% <span class="tag">lecture a=${$('a').value}, b=${$('b').value}</span>`;
+    drawChart();
+  };
+  function drawChart(){
+    const c=$('chart'), r=c.getBoundingClientRect(); c.width=r.width*devicePixelRatio; c.height=r.height*devicePixelRatio;
+    const g=c.getContext('2d'); g.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); g.clearRect(0,0,r.width,r.height);
+    const pts = state.trials.filter(t=>t.hit).map(t=>({x:t.ID,y:t.auto,src:'auto'}));
+    const mpts = state.trials.filter(t=>t.hit && t.manual!=='' && t.manual>0).map(t=>({x:t.ID,y:+t.manual}));
+    const all = pts.concat(mpts);
+    const L=40,R=10,T=14,B=26, w=r.width-L-R, h=r.height-T-B;
+    const xmax = Math.max(4, ...all.map(p=>p.x))*1.05, ymax = Math.max(1.2, ...all.map(p=>p.y))*1.1;
+    const X=x=>L+x/xmax*w, Y=y=>T+h-y/ymax*h;
+    g.strokeStyle='#dfe3ea'; g.beginPath(); g.moveTo(L,T); g.lineTo(L,T+h); g.lineTo(L+w,T+h); g.stroke();
+    g.fillStyle='#5f6778'; g.font='11px system-ui'; g.textAlign='center';
+    for(let x=0;x<=xmax;x++){ g.fillText(x, X(x), T+h+14); }
+    g.textAlign='right'; for(let y=0;y<=ymax;y+=0.5){ g.fillText(y.toFixed(1), L-4, Y(y)+4); }
+    g.textAlign='center'; g.fillText('ID (bits)', L+w/2, r.height-2); g.save(); g.translate(10,T+h/2); g.rotate(-Math.PI/2); g.fillText('MT (s)',0,0); g.restore();
+    // lecture line
+    const a=+$('a').value,b=+$('b').value; g.strokeStyle='#94a3b8'; g.setLineDash([4,4]); g.beginPath(); g.moveTo(X(0),Y(a)); g.lineTo(X(xmax),Y(a+b*xmax)); g.stroke(); g.setLineDash([]);
+    if(lastFit){ g.strokeStyle='#2563eb'; g.lineWidth=2; g.beginPath(); g.moveTo(X(0),Y(lastFit.a)); g.lineTo(X(xmax),Y(lastFit.a+lastFit.b*xmax)); g.stroke(); g.lineWidth=1; }
+    const showAuto = $('showAuto').checked;
+    if (showAuto) pts.forEach(p=>{ g.fillStyle='rgba(37,99,235,.7)'; g.beginPath(); g.arc(X(p.x),Y(p.y),3.5,0,7); g.fill(); });
+    mpts.forEach(p=>{ g.fillStyle='rgba(14,165,164,.8)'; g.beginPath(); g.rect(X(p.x)-3,Y(p.y)-3,6,6); g.fill(); });
+    g.fillStyle='#5f6778'; g.textAlign='left'; g.fillText('- - lecture a,b  ▬ your fit  ● auto  ■ manual', L+4, T+4);
+  }
+
+  // ---------- CSV ----------
+  $('csv').onclick = () => {
+    const cols=['n','participant','mode','shape','dir_deg','D_px','W_px','ID_bits','a_used','b_used','pred_MT_s','manual_MT_s','auto_MT_s','hit','path_over_D','timestamp'];
+    const rows = state.trials.map(t=>[t.n,$('pid').value,t.batch,t.shape,t.dir,t.D,t.W,t.ID,t.a_used,t.b_used,t.pred,t.manual,t.auto,t.hit?1:0,t.pathRatio,t.ts]);
+    const csv = [cols.join(',')].concat(rows.map(r=>r.join(','))).join('\n');
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=`fitts_${$('pid').value||'data'}_${Date.now()}.csv`; a.click();
+  };
+
+  // ---------- wiring ----------
+  const link=(num,rng)=>{ $(num).oninput=()=>{ $(rng).value=$(num).value; layout(); draw(); }; $(rng).oninput=()=>{ $(num).value=$(rng).value; layout(); draw(); }; };
+  link('w','wr'); link('d','dr');
+  ['shape','dir','showDW','a','b'].forEach(id=>$(id).addEventListener('input',()=>{ if(id==='dir' && $('dir').value==='rand') state.dirDeg=Math.random()*360; layout(); draw(); drawChart(); }));
+  $('ruler').onchange = () => { stage.style.cursor = $('ruler').checked ? 'cell' : 'crosshair'; state.rulerA=state.rulerB=null; draw(); };
+  window.addEventListener('resize', ()=>{ resize(); drawChart(); });
+  resize(); drawChart();
+})();
+</script>
+</body>
+</html>
